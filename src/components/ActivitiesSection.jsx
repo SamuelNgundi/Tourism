@@ -7,13 +7,13 @@ function ActivitiesSection() {
       icon: Camera,
       title: "Wildlife Safari",
       description: "Experience the Big Five in their natural habitat across Kenya's national parks",
-      image: "https://images.unsplash.com/photo-1551715909-3ab94b78e4c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80"
+      image: "https://images.unsplash.com/photo-1659639237213-e30ddf33fd4c?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
       icon: Compass,
       title: "Cultural Tours",
       description: "Immerse yourself in authentic Maasai and local Kenyan traditions",
-      image: "https://images.unsplash.com/photo-1517804234-5885b7cb0b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80"
+      image: "https://images.unsplash.com/photo-1704495511133-0cb58501606a?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     }
   ];
 

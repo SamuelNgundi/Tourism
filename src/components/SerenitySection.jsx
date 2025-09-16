@@ -34,7 +34,7 @@ function SerenitySection() {
           <div className="relative">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
               <img 
-                src="https://images.unsplash.com/photo-1549366021-9f761d040a94?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=350&q=80"
+                src="https://images.unsplash.com/photo-1532574754390-44dc5c6780bb?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Peaceful Kenya landscape with mountains"
                 className="w-full h-64 object-cover rounded-xl mb-6"
               />

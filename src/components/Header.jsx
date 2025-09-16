@@ -12,7 +12,7 @@ function Header() {
         <nav className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
             <img 
-              src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&h=64&q=80" 
+              src="src/images/logo.jpg.jpeg" 
               alt="Tourism Ambassadors Kenya Logo"
               className="h-10 w-10 rounded-full border-2 border-white/30"
             />

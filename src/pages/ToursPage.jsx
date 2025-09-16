@@ -7,14 +7,14 @@ function ToursPage() {
       title: "Maasai Mara Classic Safari",
       duration: "3 Days / 2 Nights",
       price: "KES 45,000",
-      image: "https://images.unsplash.com/photo-1551715909-3ab94b78e4c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
+      image: "https://images.unsplash.com/photo-1518459384564-ecfd8e80721f?q=80&w=848&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "Experience the Great Migration and Big Five in Kenya's most famous game reserve."
     },
     {
       title: "Coastal Culture Experience",
       duration: "4 Days / 3 Nights",
       price: "KES 32,000",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
+      image: "https://images.unsplash.com/photo-1664980587166-a6ff379c4637?q=80&w=872&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "Discover Swahili culture, pristine beaches, and historic coastal towns."
     }
   ];
@@ -24,14 +24,14 @@ function ToursPage() {
       title: "Nairobi City Walking Tour",
       duration: "Half Day",
       price: "KES 3,500",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
+      image: "https://images.unsplash.com/photo-1611348524140-53c9a25263d6?q=80&w=873&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "Explore the vibrant capital with visits to markets, museums, and cultural sites."
     },
     {
       title: "Nairobi National Park & Giraffe Centre",
       duration: "Full Day",
       price: "KES 8,500",
-      image: "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
+      image: "https://images.unsplash.com/photo-1635595358293-03620e36be48?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "Wildlife safari within the city limits plus intimate giraffe encounters."
     }
   ];

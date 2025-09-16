@@ -32,26 +32,17 @@ function HeroSection() {
                 From the Big Five in Maasai Mara to pristine coastal beaches in Diani.
               </p>
               
-              <div className="flex items-center space-x-4 mb-8">
-                <div className="flex -space-x-2">
-                  <img src="https://images.unsplash.com/photo-1494790108755-2616b612d6c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80" alt="Happy tourist" className="w-10 h-10 rounded-full border-2 border-white" />
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80" alt="Safari guide" className="w-10 h-10 rounded-full border-2 border-white" />
-                  <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80" alt="Tourism ambassador" className="w-10 h-10 rounded-full border-2 border-white" />
-                  <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80" alt="Cultural guide" className="w-10 h-10 rounded-full border-2 border-white" />
-                  <div className="w-10 h-10 rounded-full bg-forest-500 border-2 border-white flex items-center justify-center">
-                    <span className="text-xs font-semibold text-white">+10</span>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex items-center space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-gray-500">1000+ Happy Campers</p>
-                </div>
+            <div className="flex items-center justify-center space-x-3 mb-8">
+              {/* Replace the rating and avatars with your logo */}
+              <div>
+                <img
+                  src="/src/images/logo.jpg.jpeg" // Update this path to your actual logo file location
+                  alt="Tourism Website Logo"
+                  className="h-30 w-auto object-contain"
+                />
               </div>
-              
+            </div>
+                          
               <button className="group inline-flex items-center gap-2 bg-nature-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-nature-600 transition-all duration-200">
                 BOOK SAFARI NOW
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />

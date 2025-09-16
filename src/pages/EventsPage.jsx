@@ -20,7 +20,7 @@ function EventsPage() {
       time: "10:00 AM - 8:00 PM",
       location: "Maasai Mara National Reserve",
       type: "Cultural",
-      image: "https://images.unsplash.com/photo-1554075599-74a3de1b4d47?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
+      image: "https://images.unsplash.com/photo-1704495669300-216e12543f9f?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "Experience authentic Maasai traditions, dances, crafts, and storytelling in their ancestral homeland."
     },
     {
@@ -49,7 +49,7 @@ function EventsPage() {
       date: "February 10-12, 2024",
       location: "Various Locations",
       participants: 250,
-      image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
+      image: "https://images.unsplash.com/photo-1745009815344-c67a0dcfa186?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       highlights: ["Rally circuit tours", "Driver meet & greets", "Cultural exhibitions"]
     },
     {

@@ -17,7 +17,7 @@ function Footer() {
           <div className="text-center mb-16">
             <div className="flex items-center justify-center space-x-4 mb-6">
               <img 
-                src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" 
+                src="src/images/logo.jpg.jpeg" 
                 alt="Tourism Ambassadors Kenya Logo"
                 className="w-16 h-16 rounded-full border-4 border-nature-400"
               />
@@ -95,35 +95,11 @@ function Footer() {
         </div>
       </div>
       
-      <div className="border-t border-white/10 py-4">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
-            <p className="text-white/60 text-sm">
-              © 2024 Tourism Ambassadors Kenya. All rights reserved.
-            </p>
-            <p className="text-white/60 text-sm">
-              AI vibe coded development by{' '}
-              <a 
-                href="https://biela.dev/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-nature-400 hover:text-nature-300 transition-colors"
-              >
-                Biela.dev
-              </a>
-              , powered by{' '}
-              <a 
-                href="https://teachmecode.ae/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-nature-400 hover:text-nature-300 transition-colors"
-              >
-                TeachMeCode® Institute
-              </a>
-            </p>
-          </div>
-        </div>
-      </div>
+    <div className="bg-forest-900 py-4">
+      <p className="text-center text-white/70 text-sm">
+        &copy; 2025 Tourism Ambassadors. All rights reserved.
+      </p>
+    </div>
     </footer>
   );
 }

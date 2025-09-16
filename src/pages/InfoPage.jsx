@@ -105,7 +105,7 @@ function InfoPage() {
             <div className="text-center mb-16">
               <div className="bg-gradient-to-r from-nature-500 to-forest-600 rounded-2xl p-8 text-white mb-12">
                 <img 
-                  src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120&q=80" 
+                  src="src/images/logo.jpg.jpeg" 
                   alt="Tourism Ambassadors Kenya Logo"
                   className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-white/30"
                 />
@@ -154,7 +154,7 @@ function InfoPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="order-2 lg:order-1">
                 <img 
-                  src="https://images.unsplash.com/photo-1517804234-5885b7cb0b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&h=500&q=80"
+                  src="https://images.unsplash.com/photo-1751358016973-88b94f5ca474?q=80&w=1033&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Kenyan cultural celebration"
                   className="w-full h-96 object-cover rounded-2xl shadow-xl"
                 />

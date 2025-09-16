@@ -5,7 +5,7 @@ function StorySection() {
     <section className="relative py-20 overflow-hidden">
       <div className="absolute inset-0">
         <img 
-          src="https://images.unsplash.com/photo-1549366021-9f761d040a94?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
+          src="https://images.unsplash.com/photo-1649688047697-f1f6b5557500?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Kenya mountain forest landscape"
           className="w-full h-full object-cover"
         />
@@ -36,7 +36,7 @@ function StorySection() {
             
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
               <img 
-                src="https://images.unsplash.com/photo-1554075599-74a3de1b4d47?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250&q=80"
+                src="https://images.unsplash.com/photo-1696299871960-59ae209db58b?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Kenyan cultural celebration"
                 className="w-full h-32 object-cover rounded-lg mb-4"
               />
