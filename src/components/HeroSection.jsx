@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from '../images/logo.jpg.jpeg';
 import { ArrowRight, Users, Star } from 'lucide-react';
 
 function HeroSection() {
@@ -36,7 +37,7 @@ function HeroSection() {
               {/* Replace the rating and avatars with your logo */}
               <div>
                 <img
-                  src="/src/images/logo.jpg.jpeg" // Update this path to your actual logo file location
+                  src={logo}
                   alt="Tourism Website Logo"
                   className="h-30 w-auto object-contain"
                 />

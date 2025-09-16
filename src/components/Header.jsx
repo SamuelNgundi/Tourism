@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import logo from '../images/logo.jpg.jpeg';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,7 +13,7 @@ function Header() {
         <nav className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
             <img 
-              src="src/images/logo.jpg.jpeg" 
+              src={logo} 
               alt="Tourism Ambassadors Kenya Logo"
               className="h-10 w-10 rounded-full border-2 border-white/30"
             />

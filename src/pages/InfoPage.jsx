@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logo from '../images/logo.jpg.jpeg';
 import { Target, Eye, Users, Award, Mail, Phone, MapPin, Download } from 'lucide-react';
 
 function InfoPage() {
@@ -105,7 +106,7 @@ function InfoPage() {
             <div className="text-center mb-16">
               <div className="bg-gradient-to-r from-nature-500 to-forest-600 rounded-2xl p-8 text-white mb-12">
                 <img 
-                  src="src/images/logo.jpg.jpeg" 
+                  src={logo}
                   alt="Tourism Ambassadors Kenya Logo"
                   className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-white/30"
                 />

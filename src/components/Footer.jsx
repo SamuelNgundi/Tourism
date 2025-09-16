@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from '../images/logo.jpg.jpeg';
 import { MapPin, Phone, Mail, Facebook, Instagram, Twitter } from 'lucide-react';
 
 function Footer() {
@@ -17,7 +18,7 @@ function Footer() {
           <div className="text-center mb-16">
             <div className="flex items-center justify-center space-x-4 mb-6">
               <img 
-                src="src/images/logo.jpg.jpeg" 
+                src={logo}
                 alt="Tourism Ambassadors Kenya Logo"
                 className="w-16 h-16 rounded-full border-4 border-nature-400"
               />
