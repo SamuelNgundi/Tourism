@@ -46,9 +46,11 @@ function HeroSection() {
               </div>
             </div>
                           
-              <button className="group inline-flex items-center gap-2 bg-brand-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2 focus:ring-offset-white">
-                BOOK SAFARI NOW
-              </button>
+              <div className="flex justify-center">
+                <button className="group inline-flex items-center gap-2 bg-brand-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2 focus:ring-offset-white">
+                  BOOK SAFARI NOW
+                </button>
+              </div>
             </div>
           </div>
           
