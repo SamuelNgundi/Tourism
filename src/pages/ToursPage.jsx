@@ -170,13 +170,13 @@ function ToursPage() {
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <select className="w-full px-4 py-3 rounded-lg bg-white/20 text-white border border-white/30 focus:ring-2 focus:ring-white/50">
+                <select className="w-full px-4 py-3 rounded-lg bg-white/20 hover:bg-white/30 focus:bg-white/30 text-white border border-white/30 focus:border-white/50 focus:ring-2 focus:ring-white/50 appearance-none [&>option]:text-forest-900 [&>option]:bg-white">
                   <option value="">Preferred Duration</option>
                   <option value="1-3">1-3 Days</option>
                   <option value="4-7">4-7 Days</option>
                   <option value="8+">8+ Days</option>
                 </select>
-                <select className="w-full px-4 py-3 rounded-lg bg-white/20 text-white border border-white/30 focus:ring-2 focus:ring-white/50">
+                <select className="w-full px-4 py-3 rounded-lg bg-white/20 hover:bg-white/30 focus:bg-white/30 text-white border border-white/30 focus:border-white/50 focus:ring-2 focus:ring-white/50 appearance-none [&>option]:text-forest-900 [&>option]:bg-white">
                   <option value="">Budget Range</option>
                   <option value="budget">Budget (Under KES 30k)</option>
                   <option value="mid">Mid-range (KES 30k-80k)</option>
