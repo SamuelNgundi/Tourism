@@ -5,6 +5,8 @@ import { MapPin, Phone, Mail, Facebook, Instagram, Twitter } from 'lucide-react'
 function Footer() {
   return (
     <footer className="bg-forest-900 text-white">
+      {/* Subtle brand red accent */}
+      <div className="h-1 w-full bg-brand-accent-gradient opacity-90"></div>
       <div className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
           <img 
@@ -81,13 +83,13 @@ function Footer() {
               </div>
               
               <div className="flex space-x-4 mt-6">
-                <a href="#" className="bg-white/10 p-2 rounded-lg hover:bg-white/20 transition-colors">
+                <a href="#" className="bg-white/10 p-2 rounded-lg hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/30 focus:ring-offset-2 focus:ring-offset-forest-900">
                   <Facebook className="h-5 w-5" />
                 </a>
-                <a href="#" className="bg-white/10 p-2 rounded-lg hover:bg-white/20 transition-colors">
+                <a href="#" className="bg-white/10 p-2 rounded-lg hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/30 focus:ring-offset-2 focus:ring-offset-forest-900">
                   <Instagram className="h-5 w-5" />
                 </a>
-                <a href="#" className="bg-white/10 p-2 rounded-lg hover:bg-white/20 transition-colors">
+                <a href="#" className="bg-white/10 p-2 rounded-lg hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/30 focus:ring-offset-2 focus:ring-offset-forest-900">
                   <Twitter className="h-5 w-5" />
                 </a>
               </div>

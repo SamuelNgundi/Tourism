@@ -10,6 +10,9 @@ function HeroSection() {
           src="https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
           alt="Kenya wildlife safari landscape"
           className="w-full h-full object-cover"
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-nature-900/60 to-forest-900/40"></div>
       </div>
@@ -23,9 +26,8 @@ function HeroSection() {
                 <h2 className="text-2xl font-bold text-camp-600">THE HOME OF HUMAN ORIGIN</h2>
               </div>
               <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-6">
-                DISCOVER KENYA'S<br />
-                <span className="text-forest-600">MAGICAL SAFARI</span><br />
-                EXPERIENCES
+                TOURISM AMBASSADORS<br />
+                <span className="text-forest-600">KENYA</span>
               </h1>
               
               <p className="text-gray-600 mb-8">
@@ -44,9 +46,8 @@ function HeroSection() {
               </div>
             </div>
                           
-              <button className="group inline-flex items-center gap-2 bg-nature-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-nature-600 transition-all duration-200">
+              <button className="group inline-flex items-center gap-2 bg-brand-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2 focus:ring-offset-white">
                 BOOK SAFARI NOW
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
           </div>

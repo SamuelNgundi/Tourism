@@ -91,7 +91,7 @@ function ToursPage() {
                     </div>
                   </div>
                   <p className="text-gray-600 mb-4">{tour.description}</p>
-                  <button className="w-full bg-nature-500 text-white py-3 rounded-lg font-semibold hover:bg-nature-600 transition-colors">
+                  <button className="w-full bg-brand-green text-white py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
                     ENQUIRE NOW
                   </button>
                 </div>
@@ -133,7 +133,7 @@ function ToursPage() {
                     </div>
                   </div>
                   <p className="text-gray-600 mb-4">{tour.description}</p>
-                  <button className="w-full bg-camp-500 text-white py-3 rounded-lg font-semibold hover:bg-camp-600 transition-colors">
+                  <button className="w-full bg-brand-green text-white py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
                     BOOK NOW
                   </button>
                 </div>
@@ -188,7 +188,7 @@ function ToursPage() {
                 rows="4"
                 className="w-full px-4 py-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:ring-2 focus:ring-white/50 resize-none"
               ></textarea>
-              <button className="w-full bg-white text-nature-600 py-4 rounded-lg font-semibold text-lg hover:bg-nature-50 transition-colors">
+              <button className="w-full bg-white text-brand-green py-4 rounded-lg font-semibold text-lg hover:bg-brand-green/10 transition-colors">
                 REQUEST CUSTOM TOUR
               </button>
             </form>

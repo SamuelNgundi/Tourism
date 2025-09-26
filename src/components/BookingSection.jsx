@@ -74,7 +74,7 @@ function BookingSection() {
             </div>
             
             <div className="text-center">
-              <button className="bg-nature-500 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-nature-600 transition-colors">
+              <button className="bg-brand-green text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
                 BOOK YOUR SAFARI
               </button>
             </div>

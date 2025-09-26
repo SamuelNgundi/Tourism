@@ -162,7 +162,7 @@ function CompetitionPage() {
                     </div>
                   </div>
                 </div>
-                <button className="w-full bg-camp-500 text-white py-3 rounded-lg font-semibold hover:bg-camp-600 transition-colors">
+                <button className="w-full bg-brand-green text-white py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
                   ENTER COMPETITION
                 </button>
               </div>
@@ -284,10 +284,10 @@ function CompetitionPage() {
             Your story could be the next to inspire the world through #TembeaKenya.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-camp-700 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-camp-50 transition-colors">
+            <button className="bg-white text-brand-green px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brand-green/10 transition-colors">
               VIEW ALL COMPETITIONS
             </button>
-            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-camp-700 transition-colors">
+            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-forest-900 transition-colors">
               COMPETITION GUIDELINES
             </button>
           </div>

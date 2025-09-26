@@ -13,28 +13,35 @@ export default {
       },
       colors: {
         forest: {
-          50: '#f0f9f0',
-          100: '#dcf2dc',
-          200: '#bce5bc',
-          300: '#8dd18d',
-          400: '#5bb55b',
-          500: '#38a138',
-          600: '#2b7d2b',
-          700: '#246524',
-          800: '#1f511f',
-          900: '#1a431a',
+          50: '#eef9f1',
+          100: '#d6f1dd',
+          200: '#b2e3c1',
+          300: '#84d3a1',
+          400: '#4cbc7b',
+          500: '#1f9d5a', // tuned toward logo green
+          600: '#17804a',
+          700: '#12683e',
+          800: '#0f5333',
+          900: '#0d432a',
         },
         nature: {
-          50: '#f7fee7',
-          100: '#ecfccb',
-          200: '#d9f99d',
-          300: '#bef264',
-          400: '#a3e635',
-          500: '#84cc16',
-          600: '#65a30d',
-          700: '#4d7c0f',
-          800: '#3f6212',
-          900: '#365314',
+          50: '#f0fbf3',
+          100: '#dbf6e3',
+          200: '#b6ecc8',
+          300: '#85dea6',
+          400: '#4fcc80',
+          500: '#2eb765', // primary accent green
+          600: '#239556',
+          700: '#1c7848',
+          800: '#185f3c',
+          900: '#144d33',
+        },
+        brand: {
+          // Kenya flag-inspired tones
+          green: '#009245',      // closer to logo green
+          greenDark: '#007c3a',  // darker hover shade
+          red: '#C8102E',        // vivid, balanced red from logo
+          black: '#111111',
         },
         earth: {
           50: '#fef7ed',
@@ -63,7 +70,8 @@ export default {
       },
       backgroundImage: {
         'forest-gradient': 'linear-gradient(135deg, #1a431a 0%, #2b7d2b 50%, #38a138 100%)',
-        'nature-gradient': 'linear-gradient(135deg, #365314 0%, #4d7c0f 50%, #65a30d 100%)',
+        'nature-gradient': 'linear-gradient(135deg, #144d33 0%, #1c7848 50%, #2eb765 100%)',
+        'brand-accent-gradient': 'linear-gradient(135deg, rgba(200,16,46,0.12) 0%, rgba(0,146,69,0.18) 100%)',
         'camp-gradient': 'linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #14b8a6 100%)',
       },
     },

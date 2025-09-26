@@ -99,7 +99,7 @@ function PartnersSection() {
           <p className="text-forest-600 mb-4">
             Interested in partnering with Tourism Ambassadors Kenya?
           </p>
-          <button className="bg-nature-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-nature-600 transition-colors">
+          <button className="bg-brand-green text-white px-8 py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
             BECOME A PARTNER
           </button>
         </div>

@@ -269,7 +269,7 @@ function InfoPage() {
                     </div>
                   ))}
                 </div>
-                <button className="w-full mt-8 bg-nature-500 text-white py-3 rounded-lg font-semibold hover:bg-nature-600 transition-colors">
+                <button className="w-full mt-8 bg-brand-green text-white py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
                   APPLY FOR MEMBERSHIP
                 </button>
               </div>
@@ -290,7 +290,7 @@ function InfoPage() {
                     </div>
                   ))}
                 </div>
-                <button className="w-full mt-8 bg-white text-forest-700 py-3 rounded-lg font-semibold hover:bg-nature-50 transition-colors">
+                <button className="w-full mt-8 bg-white text-brand-green py-3 rounded-lg font-semibold hover:bg-brand-green/10 transition-colors">
                   VIEW MEMBERSHIP GUIDELINES
                 </button>
               </div>
@@ -359,7 +359,7 @@ function InfoPage() {
                       </div>
                     </div>
                   </div>
-                  <button className="w-full bg-nature-500 text-white py-2 rounded-lg font-medium hover:bg-nature-600 transition-colors">
+                  <button className="w-full bg-brand-green text-white py-2 rounded-lg font-medium hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
                     DOWNLOAD
                   </button>
                 </div>
@@ -445,7 +445,7 @@ function InfoPage() {
                     rows="4"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-transparent resize-none"
                   ></textarea>
-                  <button className="w-full bg-nature-500 text-white py-3 rounded-lg font-semibold hover:bg-nature-600 transition-colors">
+                  <button className="w-full bg-brand-green text-white py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
                     SEND MESSAGE
                   </button>
                 </form>

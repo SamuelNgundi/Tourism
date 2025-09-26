@@ -52,15 +52,15 @@ body {
   }
 }
 
-  .animate-scroll-left {
-    animation: scroll-left 30s linear infinite;
+@layer components {
+  /* Primary brand button */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-brand-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2;
   }
 
-  @keyframes scroll-left {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
+  /* Subtle brand button for light surfaces */
+  .btn-soft {
+    @apply inline-flex items-center gap-2 bg-brand-green/10 text-brand-green px-6 py-3 rounded-lg font-semibold hover:bg-brand-green/20 transition-colors;
       transform: translateX(-50%);
     }
   }

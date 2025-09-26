@@ -122,7 +122,7 @@ function EventsPage() {
                       </div>
                     </div>
                     <p className="text-gray-600 mb-6">{event.description}</p>
-                    <button className="bg-nature-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-nature-600 transition-colors">
+                    <button className="bg-brand-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
                       REGISTER FOR EVENT
                     </button>
                   </div>
@@ -196,7 +196,7 @@ function EventsPage() {
               placeholder="Enter your email"
               className="flex-1 px-4 py-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:ring-2 focus:ring-white/50"
             />
-            <button className="bg-white text-nature-600 px-6 py-3 rounded-lg font-semibold hover:bg-nature-50 transition-colors">
+            <button className="bg-white text-brand-green px-6 py-3 rounded-lg font-semibold hover:bg-brand-green/10 transition-colors">
               SUBSCRIBE
             </button>
           </div>

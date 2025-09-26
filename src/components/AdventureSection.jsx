@@ -26,7 +26,7 @@ function AdventureSection() {
               Our safaris offer the perfect blend of adventure and authentic African experiences.
             </p>
             
-            <button className="bg-camp-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-camp-600 transition-colors">
+            <button className="bg-brand-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
               START YOUR SAFARI
             </button>
           </div>

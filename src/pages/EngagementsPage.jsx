@@ -150,7 +150,7 @@ function EngagementsPage() {
                     <span className="font-semibold text-nature-600">{county.members}</span>
                   </div>
                 </div>
-                <button className="w-full mt-4 bg-nature-50 text-nature-700 py-2 rounded-lg text-sm font-medium hover:bg-nature-100 transition-colors">
+                <button className="w-full mt-4 bg-brand-green/10 text-brand-green py-2 rounded-lg text-sm font-medium hover:bg-brand-green/20 transition-colors">
                   CONTACT LEADER
                 </button>
               </div>
@@ -162,7 +162,7 @@ function EngagementsPage() {
               Total: <span className="font-bold text-nature-600">{counties.reduce((sum, county) => sum + county.clubs, 0)} Active Clubs</span> | 
               <span className="font-bold text-nature-600 ml-2">{counties.reduce((sum, county) => sum + county.members, 0)} Total Members</span>
             </p>
-            <button className="bg-nature-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-nature-600 transition-colors">
+            <button className="bg-brand-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
               VIEW COUNTY DETAILS MAP
             </button>
           </div>
@@ -209,7 +209,7 @@ function EngagementsPage() {
                   <p>Begin organizing activities and promoting #TembeaKenya</p>
                 </div>
               </div>
-              <button className="w-full bg-white text-nature-600 py-3 rounded-lg font-semibold hover:bg-nature-50 transition-colors">
+              <button className="w-full bg-white text-brand-green py-3 rounded-lg font-semibold hover:bg-brand-green/10 transition-colors">
                 REGISTER NEW CLUB
               </button>
             </div>
@@ -243,7 +243,7 @@ function EngagementsPage() {
                   <p>Complete individual membership registration</p>
                 </div>
               </div>
-              <button className="w-full bg-white text-camp-600 py-3 rounded-lg font-semibold hover:bg-camp-50 transition-colors">
+              <button className="w-full bg-white text-brand-green py-3 rounded-lg font-semibold hover:bg-brand-green/10 transition-colors">
                 FIND LOCAL CLUBS
               </button>
             </div>
@@ -261,7 +261,7 @@ function EngagementsPage() {
             Whether you're starting a new club or joining an existing one, become part of Kenya's growing community of Tourism Ambassadors.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-nature-500 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-nature-600 transition-colors">
+            <button className="bg-brand-green text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
               CLUB REGISTRATION
             </button>
             <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-forest-900 transition-colors">

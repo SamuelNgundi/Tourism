@@ -26,7 +26,7 @@ function SerenitySection() {
               Disconnect from the ordinary and reconnect with the wild heart of Africa.
             </p>
             
-            <button className="bg-nature-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-nature-600 transition-colors">
+            <button className="bg-brand-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
               EXPLORE KENYA
             </button>
           </div>

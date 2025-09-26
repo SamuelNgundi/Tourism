@@ -7,8 +7,8 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-nature-400 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-nature-500/20 to-forest-500/20"></div>
+    <header className="bg-brand-green relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-brand-green/20 to-brand-red/10"></div>
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <nav className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
@@ -24,13 +24,13 @@ function Header() {
           </Link>
           
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-sm font-medium text-white hover:text-white/80 transition-colors">HOME</Link>
-            <Link to="/tours" className="text-sm font-medium text-white hover:text-white/80 transition-colors">TOURS</Link>
-            <Link to="/engagements" className="text-sm font-medium text-white hover:text-white/80 transition-colors">ENGAGEMENTS</Link>
-            <Link to="/events" className="text-sm font-medium text-white hover:text-white/80 transition-colors">EVENTS</Link>
-            <Link to="/info" className="text-sm font-medium text-white hover:text-white/80 transition-colors">INFO</Link>
-            <Link to="/competition" className="text-sm font-medium text-white hover:text-white/80 transition-colors">COMPETITION</Link>
-            <Link to="/blog" className="text-sm font-medium text-white hover:text-white/80 transition-colors">BLOG</Link>
+            <Link to="/" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">HOME</Link>
+            <Link to="/tours" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">TOURS</Link>
+            <Link to="/engagements" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">ENGAGEMENTS</Link>
+            <Link to="/events" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">EVENTS</Link>
+            <Link to="/info" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">INFO</Link>
+            <Link to="/competition" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">COMPETITION</Link>
+            <Link to="/blog" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">BLOG</Link>
           </div>
 
           <button 
@@ -44,17 +44,18 @@ function Header() {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-white/20">
             <div className="flex flex-col space-y-2">
-              <Link to="/" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2">HOME</Link>
-              <Link to="/tours" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2">TOURS</Link>
-              <Link to="/engagements" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2">ENGAGEMENTS</Link>
-              <Link to="/events" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2">EVENTS</Link>
-              <Link to="/info" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2">INFO</Link>
-              <Link to="/competition" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2">COMPETITION</Link>
-              <Link to="/blog" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2">BLOG</Link>
+              <Link to="/" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">HOME</Link>
+              <Link to="/tours" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">TOURS</Link>
+              <Link to="/engagements" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">ENGAGEMENTS</Link>
+              <Link to="/events" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">EVENTS</Link>
+              <Link to="/info" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">INFO</Link>
+              <Link to="/blog" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">BLOG</Link>
             </div>
           </div>
         )}
       </div>
+      {/* Subtle brand accent bar matching logo colors */}
+      <div className="h-1 w-full bg-brand-accent-gradient opacity-90"></div>
     </header>
   );
 }

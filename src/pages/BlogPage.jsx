@@ -128,7 +128,7 @@ function BlogPage() {
               <input 
                 type="text" 
                 placeholder="Search articles..."
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nature-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-green focus:border-transparent"
               />
             </div>
 
@@ -140,8 +140,8 @@ function BlogPage() {
                   onClick={() => setSelectedCategory(category.id)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     selectedCategory === category.id
-                      ? 'bg-nature-500 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-nature-100'
+                      ? 'bg-brand-green text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-brand-green/10'
                   }`}
                 >
                   {category.name} ({category.count})
@@ -161,7 +161,7 @@ function BlogPage() {
             </h2>
           </div>
 
-          <div className="bg-gradient-to-r from-nature-500 to-camp-600 rounded-2xl overflow-hidden shadow-2xl">
+          <div className="bg-gradient-to-r from-brand-green to-camp-600 rounded-2xl overflow-hidden shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-2">
               <div className="relative h-64 lg:h-auto">
                 <img src={featuredPost.image} alt={featuredPost.title} className="w-full h-full object-cover" />
@@ -186,7 +186,7 @@ function BlogPage() {
                     <span>{featuredPost.views} views</span>
                   </div>
                 </div>
-                <button className="bg-white text-nature-600 px-6 py-3 rounded-lg font-semibold hover:bg-nature-50 transition-colors">
+                <button className="bg-white text-brand-green px-6 py-3 rounded-lg font-semibold hover:bg-brand-green/10 transition-colors">
                   READ FULL ARTICLE
                 </button>
               </div>
@@ -228,7 +228,7 @@ function BlogPage() {
                         <span>{post.date}</span>
                       </div>
                     </div>
-                    <span className="text-nature-600 font-medium">{post.readTime}</span>
+                    <span className="text-brand-green font-medium">{post.readTime}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4 text-xs text-gray-500">
@@ -241,7 +241,7 @@ function BlogPage() {
                         <span>{post.comments}</span>
                       </div>
                     </div>
-                    <button className="text-nature-600 font-medium text-sm hover:text-nature-700 transition-colors">
+                    <button className="text-brand-green font-medium text-sm hover:text-brand-greenDark transition-colors">
                       Read More →
                     </button>
                   </div>
@@ -252,7 +252,7 @@ function BlogPage() {
 
           {/* Load More */}
           <div className="text-center mt-12">
-            <button className="bg-nature-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-nature-600 transition-colors">
+            <button className="bg-brand-green text-white px-8 py-3 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2">
               LOAD MORE ARTICLES
             </button>
           </div>
@@ -274,7 +274,7 @@ function BlogPage() {
               placeholder="Enter your email"
               className="flex-1 px-4 py-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:ring-2 focus:ring-white/50"
             />
-            <button className="bg-white text-forest-700 px-6 py-3 rounded-lg font-semibold hover:bg-nature-50 transition-colors">
+            <button className="bg-white text-brand-green px-6 py-3 rounded-lg font-semibold hover:bg-brand-green/10 transition-colors">
               SUBSCRIBE
             </button>
           </div>
