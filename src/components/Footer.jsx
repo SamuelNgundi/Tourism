@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../images/logo.jpg.jpeg';
 import { MapPin, Phone, Mail, Facebook, Instagram, Twitter } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 function Footer() {
   return (
@@ -9,10 +10,13 @@ function Footer() {
       <div className="h-1 w-full bg-brand-accent-gradient opacity-90"></div>
       <div className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
-          <img 
+          <OptimizedImage 
             src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=800&q=80"
             alt="Kenya forest background"
             className="w-full h-full object-cover opacity-20"
+            widths={[640, 960, 1280, 1536, 1920]}
+            sizes="100vw"
+            quality={60}
           />
         </div>
         

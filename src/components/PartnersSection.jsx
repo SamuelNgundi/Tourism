@@ -1,4 +1,5 @@
 import React from 'react';
+import OptimizedImage from './OptimizedImage';
 
 function PartnersSection() {
   const partners = [
@@ -77,10 +78,13 @@ function PartnersSection() {
                 className="flex-shrink-0 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 group"
               >
                 <div className="p-6 flex flex-col items-center justify-center h-32 w-48">
-                  <img 
+                  <OptimizedImage 
                     src={partner.logo} 
                     alt={`${partner.name} logo`}
                     className="max-h-16 max-w-full object-contain mb-3 group-hover:scale-105 transition-transform duration-300"
+                    widths={[200, 300, 400]}
+                    sizes="192px"
+                    quality={80}
                   />
                   <p className="text-xs font-medium text-forest-700 text-center leading-tight">
                     {partner.name}

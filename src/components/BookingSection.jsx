@@ -1,14 +1,19 @@
 import React from 'react';
 import { Calendar, MapPin, Users } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 function BookingSection() {
   return (
     <section className="relative py-20 overflow-hidden">
       <div className="absolute inset-0">
-        <img 
+        <OptimizedImage 
           src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
           alt="Kenya safari camping with tent"
           className="w-full h-full object-cover"
+          widths={[640, 960, 1280, 1536, 1920]}
+          sizes="100vw"
+          quality={70}
+          priority
         />
         <div className="absolute inset-0 bg-black/50"></div>
       </div>

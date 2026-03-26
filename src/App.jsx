@@ -9,22 +9,73 @@ import EventsPage from './pages/EventsPage';
 import InfoPage from './pages/InfoPage';
 import CompetitionPage from './pages/CompetitionPage';
 import BlogPage from './pages/BlogPage';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import PostEditor from './pages/admin/PostEditor';
+import PostList from './pages/admin/PostList';
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen">
-        <Header />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/tours" element={<ToursPage />} />
-          <Route path="/engagements" element={<EngagementsPage />} />
-          <Route path="/events" element={<EventsPage />} />
-          <Route path="/info" element={<InfoPage />} />
-          <Route path="/competition" element={<CompetitionPage />} />
-          <Route path="/blog" element={<BlogPage />} />
+          {/* Public Routes */}
+          <Route path="/" element={
+            <>
+              <Header />
+              <HomePage />
+              <Footer />
+            </>
+          } />
+          <Route path="/tours" element={
+            <>
+              <Header />
+              <ToursPage />
+              <Footer />
+            </>
+          } />
+          <Route path="/engagements" element={
+            <>
+              <Header />
+              <EngagementsPage />
+              <Footer />
+            </>
+          } />
+          <Route path="/events" element={
+            <>
+              <Header />
+              <EventsPage />
+              <Footer />
+            </>
+          } />
+          <Route path="/info" element={
+            <>
+              <Header />
+              <InfoPage />
+              <Footer />
+            </>
+          } />
+          <Route path="/competition" element={
+            <>
+              <Header />
+              <CompetitionPage />
+              <Footer />
+            </>
+          } />
+          <Route path="/blog" element={
+            <>
+              <Header />
+              <BlogPage />
+              <Footer />
+            </>
+          } />
+
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/posts" element={<PostList />} />
+          <Route path="/admin/posts/new" element={<PostEditor />} />
+          <Route path="/admin/posts/:id/edit" element={<PostEditor />} />
         </Routes>
-        <Footer />
       </div>
     </Router>
   );

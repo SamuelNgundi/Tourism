@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import logo from '../images/logo.jpg.jpeg';
 import { Target, Eye, Users, Award, Mail, Phone, MapPin, Download } from 'lucide-react';
+import OptimizedImage from '../components/OptimizedImage';
 
 function InfoPage() {
   const [activeTab, setActiveTab] = useState('about');
@@ -53,10 +54,14 @@ function InfoPage() {
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
-          <img 
+          <OptimizedImage 
             src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
             alt="Kenya landscape"
             className="w-full h-full object-cover"
+            widths={[640, 960, 1280, 1536, 1920]}
+            sizes="100vw"
+            quality={70}
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-forest-900/80 to-forest-900/40"></div>
         </div>
@@ -144,20 +149,26 @@ function InfoPage() {
                 </div>
               </div>
               <div>
-                <img 
+                <OptimizedImage
                   src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&h=500&q=80"
                   alt="Kenya safari wildlife"
                   className="w-full h-96 object-cover rounded-2xl shadow-xl"
+                  widths={[480, 768, 1024, 1280]}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  quality={75}
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="order-2 lg:order-1">
-                <img 
+                <OptimizedImage 
                   src="https://images.unsplash.com/photo-1751358016973-88b94f5ca474?q=80&w=1033&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Kenyan cultural celebration"
                   className="w-full h-96 object-cover rounded-2xl shadow-xl"
+                  widths={[480, 768, 1024, 1280]}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  quality={75}
                 />
               </div>
               <div className="order-1 lg:order-2">

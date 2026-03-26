@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Clock, Users, Star } from 'lucide-react';
+import OptimizedImage from '../components/OptimizedImage';
 
 function ToursPage() {
   const groupTours = [
@@ -41,10 +42,14 @@ function ToursPage() {
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
-          <img 
+          <OptimizedImage 
             src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
             alt="Kenya safari landscape with elephants"
             className="w-full h-full object-cover"
+            widths={[640, 960, 1280, 1536, 1920]}
+            sizes="100vw"
+            quality={70}
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-forest-900/80 to-forest-900/40"></div>
         </div>
@@ -73,7 +78,7 @@ function ToursPage() {
             {groupTours.map((tour, index) => (
               <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                 <div className="relative h-64">
-                  <img src={tour.image} alt={tour.title} className="w-full h-full object-cover" />
+                  <OptimizedImage src={tour.image} alt={tour.title} className="w-full h-full object-cover" widths={[640, 960, 1280]} sizes="(min-width: 768px) 50vw, 100vw" quality={75} />
                   <div className="absolute top-4 right-4 bg-nature-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
                     {tour.price}
                   </div>
@@ -115,7 +120,7 @@ function ToursPage() {
             {nairobiTours.map((tour, index) => (
               <div key={index} className="bg-gray-50 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                 <div className="relative h-64">
-                  <img src={tour.image} alt={tour.title} className="w-full h-full object-cover" />
+                  <OptimizedImage src={tour.image} alt={tour.title} className="w-full h-full object-cover" widths={[640, 960, 1280]} sizes="(min-width: 768px) 50vw, 100vw" quality={75} />
                   <div className="absolute top-4 right-4 bg-camp-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
                     {tour.price}
                   </div>

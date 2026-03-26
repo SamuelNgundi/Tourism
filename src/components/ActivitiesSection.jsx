@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tent, TreePine, Camera, Compass } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 function ActivitiesSection() {
   const activities = [
@@ -33,10 +34,13 @@ function ActivitiesSection() {
           {activities.map((activity, index) => (
             <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="relative h-48">
-                <img 
+                <OptimizedImage 
                   src={activity.image}
                   alt={activity.title}
                   className="w-full h-full object-cover"
+                  widths={[480, 768, 1024]}
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  quality={75}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 right-4">
@@ -55,10 +59,13 @@ function ActivitiesSection() {
         
         <div className="relative">
           <div className="absolute inset-0">
-            <img 
+            <OptimizedImage 
               src="https://images.unsplash.com/photo-1521651201144-634f700b36ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
               alt="Kenya forest landscape"
               className="w-full h-full object-cover rounded-2xl"
+              widths={[640, 960, 1280, 1536]}
+              sizes="100vw"
+              quality={70}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-forest-900/80 to-transparent rounded-2xl"></div>
           </div>

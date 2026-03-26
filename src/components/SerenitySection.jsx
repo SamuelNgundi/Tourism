@@ -1,13 +1,17 @@
 import React from 'react';
+import OptimizedImage from './OptimizedImage';
 
 function SerenitySection() {
   return (
     <section className="relative py-20 overflow-hidden">
       <div className="absolute inset-0">
-        <img 
+        <OptimizedImage 
           src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
           alt="Peaceful campfire in Kenya wilderness"
           className="w-full h-full object-cover"
+          widths={[640, 960, 1280, 1536, 1920]}
+          sizes="100vw"
+          quality={70}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-forest-900/90 to-forest-900/70"></div>
       </div>
@@ -33,10 +37,13 @@ function SerenitySection() {
           
           <div className="relative">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <img 
+              <OptimizedImage 
                 src="https://images.unsplash.com/photo-1532574754390-44dc5c6780bb?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Peaceful Kenya landscape with mountains"
                 className="w-full h-64 object-cover rounded-xl mb-6"
+                widths={[480, 768, 1024, 1280]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                quality={75}
               />
               <h3 className="text-xl font-semibold text-white mb-3">Find Your Adventure</h3>
               <p className="text-white/80">

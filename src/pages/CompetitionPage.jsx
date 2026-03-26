@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Trophy, Users, Calendar, CheckCircle, Award, Star } from 'lucide-react';
+import OptimizedImage from '../components/OptimizedImage';
 
 function CompetitionPage() {
   const [selectedCategory, setSelectedCategory] = useState('photography');
@@ -109,10 +110,14 @@ function CompetitionPage() {
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
-          <img 
+          <OptimizedImage 
             src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
             alt="Tourism competition celebration"
             className="w-full h-full object-cover"
+            widths={[640, 960, 1280, 1536, 1920]}
+            sizes="100vw"
+            quality={70}
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-camp-900/80 to-camp-900/40"></div>
         </div>
@@ -253,7 +258,7 @@ function CompetitionPage() {
             {pastWinners.map((winner, index) => (
               <div key={index} className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
                 <div className="relative h-64">
-                  <img src={winner.image} alt={winner.name} className="w-full h-full object-cover" />
+                  <OptimizedImage src={winner.image} alt={winner.name} className="w-full h-full object-cover" widths={[480, 640, 768, 1024]} sizes="(min-width: 1024px) 33vw, 100vw" quality={75} />
                   <div className="absolute top-4 left-4 bg-camp-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
                     {winner.year} Winner
                   </div>

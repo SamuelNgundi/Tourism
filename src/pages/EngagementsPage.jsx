@@ -1,5 +1,6 @@
 import React from 'react';
 import { Users, MapPin, GraduationCap, Calendar } from 'lucide-react';
+import OptimizedImage from '../components/OptimizedImage';
 
 function EngagementsPage() {
   const counties = [
@@ -57,10 +58,14 @@ function EngagementsPage() {
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
-          <img 
+          <OptimizedImage 
             src="https://images.unsplash.com/photo-1517804234-5885b7cb0b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
             alt="Kenya community engagement"
             className="w-full h-full object-cover"
+            widths={[640, 960, 1280, 1536, 1920]}
+            sizes="100vw"
+            quality={70}
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-camp-900/80 to-camp-900/40"></div>
         </div>
@@ -105,10 +110,13 @@ function EngagementsPage() {
               </div>
             </div>
             <div className="relative">
-              <img 
+              <OptimizedImage 
                 src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&h=500&q=80"
                 alt="Tourism ambassador community meeting"
                 className="w-full h-96 object-cover rounded-2xl shadow-xl"
+                widths={[480, 768, 1024, 1280]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                quality={75}
               />
             </div>
           </div>

@@ -1,13 +1,18 @@
 import React from 'react';
+import OptimizedImage from './OptimizedImage';
 
 function AdventureSection() {
   return (
     <section className="relative py-20 overflow-hidden">
       <div className="absolute inset-0">
-        <img 
+        <OptimizedImage 
           src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
           alt="Kenya wildlife adventure"
           className="w-full h-full object-cover"
+          widths={[640, 960, 1280, 1536, 1920]}
+          sizes="100vw"
+          quality={70}
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-r from-camp-900/80 to-transparent"></div>
       </div>

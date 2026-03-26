@@ -1,5 +1,6 @@
 import React from 'react';
 import { Shield, Zap, Wifi, Utensils } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 function AmenitiesSection() {
   const amenities = [
@@ -28,10 +29,14 @@ function AmenitiesSection() {
   return (
     <section className="relative py-20 overflow-hidden">
       <div className="absolute inset-0">
-        <img 
+        <OptimizedImage
           src="https://plus.unsplash.com/premium_photo-1661963014384-bd88252d977c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Kenya wildlife silhouette at sunset"
           className="w-full h-full object-cover"
+          widths={[640, 960, 1280, 1536, 1920]}
+          sizes="100vw"
+          quality={70}
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-forest-900/60 via-forest-800/40 to-forest-900/80"></div>
       </div>
@@ -59,17 +64,13 @@ function AmenitiesSection() {
           ))}
         </div>
         
-        <div className="mt-16 text-center">
-          <div className="absolute inset-x-0 bottom-10">
-            <div className="flex justify-center">
-              <div className="bg-white/10 backdrop-blur-sm rounded-full p-4 border border-white/20">
-                <svg className="w-16 h-16 text-nature-400" viewBox="0 0 100 100" fill="currentColor">
-                  <path d="M50 10 L60 30 L80 30 L65 45 L70 65 L50 55 L30 65 L35 45 L20 30 L40 30 Z"/>
-                  <circle cx="50" cy="15" r="3"/>
-                  <path d="M45 75 Q50 85 55 75"/>
-                </svg>
-              </div>
-            </div>
+        <div className="mt-12 flex justify-center">
+          <div className="group bg-white/10 backdrop-blur-sm rounded-full p-3 md:p-4 border border-white/20 transition-transform duration-300 ease-out hover:scale-105">
+            <svg className="w-8 h-8 md:w-10 md:h-10 text-nature-400 transition-transform duration-300 ease-out group-hover:rotate-6 group-hover:scale-110" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
+              <path d="M50 10 L60 30 L80 30 L65 45 L70 65 L50 55 L30 65 L35 45 L20 30 L40 30 Z"/>
+              <circle cx="50" cy="15" r="3"/>
+              <path d="M45 75 Q50 85 55 75"/>
+            </svg>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 function TestimonialsSection() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -58,10 +59,13 @@ function TestimonialsSection() {
         <div className="relative max-w-4xl mx-auto">
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
             <div className="text-center">
-              <img 
+              <OptimizedImage 
                 src={testimonials[currentTestimonial].image}
                 alt={testimonials[currentTestimonial].name}
                 className="w-20 h-20 rounded-full mx-auto mb-6 object-cover border-4 border-nature-200"
+                widths={[120, 160, 200]}
+                sizes="80px"
+                quality={80}
               />
               
               <div className="flex justify-center mb-4">

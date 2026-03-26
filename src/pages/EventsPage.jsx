@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Calendar, Clock, MapPin, Users, Star } from 'lucide-react';
+import OptimizedImage from '../components/OptimizedImage';
 
 function EventsPage() {
   const [selectedMonth, setSelectedMonth] = useState('all');
@@ -67,10 +68,14 @@ function EventsPage() {
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
-          <img 
+          <OptimizedImage 
             src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
             alt="Kenya cultural event celebration"
             className="w-full h-full object-cover"
+            widths={[640, 960, 1280, 1536, 1920]}
+            sizes="100vw"
+            quality={70}
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-forest-900/80 to-forest-900/40"></div>
         </div>
@@ -100,7 +105,7 @@ function EventsPage() {
               <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   <div className="relative h-64 lg:h-auto">
-                    <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
+                    <OptimizedImage src={event.image} alt={event.title} className="w-full h-full object-cover" widths={[640, 960, 1280]} sizes="(min-width: 1024px) 33vw, 100vw" quality={75} />
                     <div className="absolute top-4 left-4 bg-nature-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
                       {event.type}
                     </div>
@@ -147,7 +152,7 @@ function EventsPage() {
             {pastEvents.map((event, index) => (
               <div key={index} className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg">
                 <div className="relative h-64">
-                  <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
+                  <OptimizedImage src={event.image} alt={event.title} className="w-full h-full object-cover" widths={[640, 960, 1280]} sizes="(min-width: 768px) 50vw, 100vw" quality={75} />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   <div className="absolute bottom-4 left-4 right-4">
                     <h3 className="text-xl font-bold text-white mb-2">{event.title}</h3>

@@ -1,18 +1,20 @@
 import React from 'react';
 import logo from '../images/logo.jpg.jpeg';
 import { ArrowRight, Users, Star } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 function HeroSection() {
   return (
     <section className="relative min-h-screen bg-nature-gradient overflow-hidden">
       <div className="absolute inset-0">
-        <img 
+        <OptimizedImage 
           src="https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
           alt="Kenya wildlife safari landscape"
           className="w-full h-full object-cover"
-          fetchpriority="high"
-          loading="eager"
-          decoding="async"
+          widths={[640, 960, 1280, 1536, 1920]}
+          sizes="100vw"
+          quality={70}
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-r from-nature-900/60 to-forest-900/40"></div>
       </div>
