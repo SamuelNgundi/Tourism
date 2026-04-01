@@ -5,6 +5,14 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
+// Utility function to strip HTML tags
+const stripHtmlTags = (html) => {
+  if (!html) return '';
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+};
+
 function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [loading, setLoading] = useState(true);
@@ -31,11 +39,13 @@ function BlogPage() {
         });
         
         const posts = response.data.data.posts || [];
-        setBlogPosts(posts);
+        // Transform all posts to strip HTML tags and format data
+        const transformedPosts = posts.map(post => transformPostData(post));
+        setBlogPosts(transformedPosts);
         
         // Set featured post (first post)
-        if (posts && posts.length > 0) {
-          setFeaturedPost(transformPostData(posts[0]));
+        if (transformedPosts && transformedPosts.length > 0) {
+          setFeaturedPost(transformedPosts[0]);
         } else {
           // If no posts from API, load demo data
           loadDemoData();
@@ -60,10 +70,10 @@ function BlogPage() {
   // Transform API data to match component structure
   const transformPostData = (post) => ({
     title: post.title,
-    excerpt: post.excerpt || (post.body ? post.body.substring(0, 200) + '...' : ''),
+    excerpt: stripHtmlTags(post.excerpt || post.body).substring(0, 200) + '...',
     author: post.author_email || 'Tourism Ambassador',
     date: post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Recent',
-    readTime: `${Math.ceil((post.body?.length || 200) / 200)} min read`,
+    readTime: `${Math.ceil((stripHtmlTags(post.body)?.length || 200) / 200)} min read`,
     views: Math.floor(Math.random() * 1000) + 100, // Simulated views
     comments: Math.floor(Math.random() * 30), // Simulated comments
     image: post.featured_image || `https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250&q=80`,

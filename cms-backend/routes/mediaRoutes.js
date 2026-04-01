@@ -143,6 +143,56 @@ router.get('/', authMiddleware, async (req, res) => {
   }
 });
 
+/**
+ * DELETE /api/media/:id - Delete a media file (Admin only)
+ */
+router.delete('/:id', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // First, get the media file info
+    const selectQuery = 'SELECT * FROM media WHERE id = $1';
+    const selectResult = await pool.query(selectQuery, [id]);
+    
+    if (selectResult.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'Media file not found'
+      });
+    }
+    
+    const mediaFile = selectResult.rows[0];
+    
+    // Delete from database
+    const deleteQuery = 'DELETE FROM media WHERE id = $1 RETURNING *';
+    const deleteResult = await pool.query(deleteQuery, [id]);
+    
+    // Try to delete the physical file
+    try {
+      const filePath = path.join(__dirname, '..', mediaFile.url.replace('/uploads/', 'uploads/'));
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+        console.log('Deleted file:', filePath);
+      }
+    } catch (fileError) {
+      console.warn('Could not delete physical file:', fileError.message);
+      // Continue anyway - database record is deleted
+    }
+    
+    res.json({
+      success: true,
+      data: deleteResult.rows[0],
+      message: 'Media file deleted successfully'
+    });
+  } catch (error) {
+    console.error('Delete media error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to delete media file'
+    });
+  }
+});
+
 // Error handling middleware for multer
 router.use((error, req, res, next) => {
   if (error instanceof multer.MulterError) {

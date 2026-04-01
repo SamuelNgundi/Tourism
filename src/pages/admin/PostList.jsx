@@ -5,6 +5,14 @@ import { Plus, Edit, Trash2, Eye, Search, Filter } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
+// Utility function to strip HTML tags
+const stripHtmlTags = (html) => {
+  if (!html) return '';
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+};
+
 function PostList() {
   const navigate = useNavigate();
   const token = localStorage.getItem('adminToken');
@@ -196,7 +204,7 @@ function PostList() {
                               {post.title}
                             </div>
                             <div className="text-sm text-gray-500 truncate max-w-md">
-                              {post.excerpt}
+                              {stripHtmlTags(post.excerpt)}
                             </div>
                           </div>
                         </div>

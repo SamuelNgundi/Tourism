@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import damaris from '../images/Damaris_Maweu.jpg';
+import jesse from '../images/Jesse_Saruni.jpg';
+import margaret from '../images/Margaret_Wanjiku.jpg';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 
@@ -7,24 +10,24 @@ function TestimonialsSection() {
 
   const testimonials = [
     {
-      name: "Sarah Wanjiku",
-      role: "Tourism Ambassador - Nairobi",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612d6c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
-      text: "Being a Tourism Ambassador has opened my eyes to the incredible beauty of Kenya. The #TembeaKenya initiative connects us with our heritage while sharing it with the world.",
+      name: "Hon. Dr. Damaris Maweu",
+      role: "Director at Kenya Medical Research Institute (KEMRI)",
+      image: damaris,
+      text: "It was a motivation for cultural tourism as it ignited a strong desire to interact more with local communities to experience their robust heritage and get involved in their cultural pride.",
       rating: 5
     },
     {
-      name: "James Kiprotich",
-      role: "Cultural Guide - Maasai Mara",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
-      text: "Through Tourism Ambassadors, I have been able to showcase authentic Maasai culture to visitors from around the globe. It's more than tourism - it's cultural preservation.",
+      name: "Wakili Jesse Saruni",
+      role: "Lawyer",
+      image: jesse,
+      text: "As a Tourism Ambassador, I marvel at the opportunities available to attract tourists in Kenya. Tourism Ambassadors are at the front of marketing Kenya.",
       rating: 5
     },
     {
-      name: "Grace Mutua",
-      role: "Student Ambassador - Mombasa",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
-      text: "The ambassador program taught me leadership skills while promoting our beautiful coastal culture. #TembeaKenya isn't just a hashtag - it's a movement!",
+      name: "Dr.Hon Margaret Wanjiku",
+      role: "",
+      image: margaret,
+      text: "Taste the world, one bite at a time with the Tourism Ambassadors",
       rating: 5
     }
   ];
@@ -49,7 +52,7 @@ function TestimonialsSection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-forest-900 mb-4">
-            AMBASSADOR <span className="text-nature-600">VOICES</span>
+            TESTIMONIALS <span className="text-nature-600">OF OUR AMBASSADORS</span>
           </h2>
           <p className="text-lg text-forest-700 max-w-3xl mx-auto">
             Hear from our passionate Tourism Ambassadors who are promoting Kenya's beauty and culture through the #TembeaKenya movement.

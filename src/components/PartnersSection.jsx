@@ -1,55 +1,31 @@
 import React from 'react';
+import Magical from '../images/Magical_Kenya.png';
+import Tourism from '../images/Tourism.jpg';
+import Kepaco from '../images/Kepaco.jpg';
+import Global from '../images/Global.png';
 import OptimizedImage from './OptimizedImage';
 
 function PartnersSection() {
   const partners = [
     {
-      name: "Kenya Tourism Board",
-      logo: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
+      name: "Magical Kenya",
+      logo: Magical,
     },
     {
-      name: "Kenya Wildlife Service", 
-      logo: "https://images.unsplash.com/photo-1565726952525-b39a4ddbb644?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
+      name: "Ministry of Tourism and Wildlife", 
+      logo: Tourism,
     },
     {
-      name: "Kenya Association of Hotelkeepers",
-      logo: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
+      name: "Global Peace Chain",
+      logo: Global,
     },
     {
-      name: "Kenya Civil Aviation Authority",
-      logo: "https://images.unsplash.com/photo-1517804234-5885b7cb0b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
+      name: "KePACO",
+      logo: Kepaco,
     },
     {
-      name: "Kenya Association of Travel Agents",
-      logo: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
-    },
-    {
-      name: "Ministry of Tourism & Wildlife",
-      logo: "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
-    },
-    {
-      name: "Kenya National Museums",
-      logo: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
-    },
-    {
-      name: "Kenya Forest Service",
-      logo: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
-    },
-    {
-      name: "Kenya Airports Authority",
-      logo: "https://images.unsplash.com/photo-1549366021-9f761d040a94?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
-    },
-    {
-      name: "Kenya Cultural Centre",
-      logo: "https://images.unsplash.com/photo-1554075599-74a3de1b4d47?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
-    },
-    {
-      name: "Kenya Association of Tour Operators",
-      logo: "https://images.unsplash.com/photo-1547970810-dc1eac37d174?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
-    },
-    {
-      name: "East African Community",
-      logo: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=100&q=80"
+      name: "Magical Kenya",
+      logo: Magical,
     }
   ];
 

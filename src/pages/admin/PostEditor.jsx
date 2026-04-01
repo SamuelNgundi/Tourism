@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { ArrowLeft, Save, Eye, Trash2, Upload, Image, User } from 'lucide-react';
+import { ArrowLeft, Save, Eye, Trash2, Upload, Image, User, X } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
@@ -217,6 +217,37 @@ function PostEditor() {
     setBody(body + '\n' + imageHtml);
   };
 
+  const handleDeleteMedia = async (mediaId, mediaUrl) => {
+    // Check if this image is currently set as featured image
+    if (featuredImage === mediaUrl) {
+      if (confirm('This image is set as featured image. Deleting it will remove the featured image. Continue?')) {
+        setFeaturedImage(null);
+      } else {
+        return;
+      }
+    }
+
+    if (!confirm('Are you sure you want to delete this image? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      setUploading(true);
+      await axios.delete(`${API_URL}/media/${mediaId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      // Refresh media library
+      fetchMediaLibrary();
+      alert('Image deleted successfully!');
+    } catch (err) {
+      console.error('Delete error:', err);
+      alert('Failed to delete image: ' + (err.response?.data?.error || 'Unknown error'));
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const quillModules = {
     toolbar: [
       [{ 'header': [1, 2, 3, false] }],
@@ -393,20 +424,29 @@ function PostEditor() {
                     <p className="text-sm font-semibold text-gray-700 mb-2">Or select from library:</p>
                     <div className="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto">
                       {mediaLibrary.map((media) => (
-                        <button
-                          key={media.id}
-                          type="button"
-                          onClick={() => selectFromLibrary(media.url)}
-                          className={`relative aspect-square rounded-lg overflow-hidden border-2 ${
-                            featuredImage === media.url ? 'border-brand-green' : 'border-gray-200'
-                          }`}
-                        >
-                          <img 
-                            src={media.url} 
-                            alt={media.original_name} 
-                            className="w-full h-full object-cover"
-                          />
-                        </button>
+                        <div key={media.id} className="relative group">
+                          <button
+                            type="button"
+                            onClick={() => selectFromLibrary(media.url)}
+                            className={`w-full aspect-square rounded-lg overflow-hidden border-2 ${
+                              featuredImage === media.url ? 'border-brand-green' : 'border-gray-200'
+                            }`}
+                          >
+                            <img 
+                              src={media.url} 
+                              alt={media.original_name} 
+                              className="w-full h-full object-cover"
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteMedia(media.id, media.url)}
+                            className="absolute top-1 right-1 p-1.5 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 hover:bg-red-600 transition-opacity shadow-lg"
+                            title="Delete image"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </div>
                       ))}
                     </div>
                   </div>

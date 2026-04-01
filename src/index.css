@@ -50,6 +50,50 @@ body {
   .scrollbar-custom::-webkit-scrollbar-thumb:hover {
     background: #65a30d;
   }
+
+  /* Animation for modal fade-in */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.2s ease-out;
+  }
+
+  /* Animation for modal scale-up */
+  @keyframes scale-up {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-scale-up {
+    animation: scale-up 0.3s ease-out;
+  }
+
+  /* Slow bounce animation for icon */
+  @keyframes bounce-slow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-bounce-slow {
+    animation: bounce-slow 2s ease-in-out infinite;
+  }
 }
 
 @layer components {
