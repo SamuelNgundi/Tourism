@@ -1,57 +1,51 @@
 import React from 'react';
+import Hero from '../images/Hero.jpg';
+import Official from '../images/official.jpg';
 import { Users, MapPin, GraduationCap, Calendar } from 'lucide-react';
 import OptimizedImage from '../components/OptimizedImage';
 
 function EngagementsPage() {
   const counties = [
-    { name: "Nairobi", clubs: 12, members: 450, youthLeader: "Grace Wanjiku", contact: "+254 700 123 001" },
-    { name: "Mombasa", clubs: 8, members: 320, youthLeader: "Hassan Mwalimu", contact: "+254 700 123 002" },
-    { name: "Kisumu", clubs: 6, members: 240, youthLeader: "Mary Atieno", contact: "+254 700 123 003" },
-    { name: "Nakuru", clubs: 5, members: 180, youthLeader: "James Kiptoo", contact: "+254 700 123 004" },
-    { name: "Uasin Gishu", clubs: 4, members: 160, youthLeader: "Sarah Cherop", contact: "+254 700 123 005" },
-    { name: "Kiambu", clubs: 7, members: 280, youthLeader: "Peter Kamau", contact: "+254 700 123 006" },
-    { name: "Turkana", clubs: 3, members: 95, youthLeader: "John Ekeno", contact: "+254 700 123 007" },
-    { name: "West Pokot", clubs: 2, members: 65, youthLeader: "Moses Pkosing", contact: "+254 700 123 008" },
-    { name: "Samburu", clubs: 2, members: 58, youthLeader: "Grace Lekalgut", contact: "+254 700 123 009" },
-    { name: "Trans Nzoia", clubs: 3, members: 110, youthLeader: "David Wekesa", contact: "+254 700 123 010" },
-    { name: "Marakwet", clubs: 2, members: 72, youthLeader: "Mercy Chemtai", contact: "+254 700 123 011" },
-    { name: "Keiyo", clubs: 2, members: 68, youthLeader: "Victor Kiprotich", contact: "+254 700 123 012" },
-    { name: "Nandi", clubs: 3, members: 125, youthLeader: "Stella Chepkwony", contact: "+254 700 123 013" },
-    { name: "Baringo", clubs: 2, members: 85, youthLeader: "Daniel Kibet", contact: "+254 700 123 014" },
-    { name: "Laikipia", clubs: 3, members: 140, youthLeader: "Anne Wanjala", contact: "+254 700 123 015" },
-    { name: "Nyeri", clubs: 4, members: 195, youthLeader: "Francis Mwangi", contact: "+254 700 123 016" },
-    { name: "Kirinyaga", clubs: 3, members: 155, youthLeader: "Lucy Wangari", contact: "+254 700 123 017" },
-    { name: "Murang'a", clubs: 4, members: 185, youthLeader: "Stephen Njoroge", contact: "+254 700 123 018" },
-    { name: "Kiambu", clubs: 5, members: 220, youthLeader: "Jane Njeri", contact: "+254 700 123 019" },
-    { name: "Meru", clubs: 4, members: 165, youthLeader: "Patrick Muthomi", contact: "+254 700 123 020" },
-    { name: "Tharaka Nithi", clubs: 2, members: 88, youthLeader: "Faith Kawira", contact: "+254 700 123 021" },
-    { name: "Embu", clubs: 3, members: 132, youthLeader: "Joseph Njuki", contact: "+254 700 123 022" },
-    { name: "Kitui", clubs: 3, members: 145, youthLeader: "Mary Mutinda", contact: "+254 700 123 023" },
-    { name: "Machakos", clubs: 4, members: 175, youthLeader: "Paul Musyoka", contact: "+254 700 123 024" },
-    { name: "Makueni", clubs: 3, members: 128, youthLeader: "Rose Mwende", contact: "+254 700 123 025" },
-    { name: "Nyandarua", clubs: 3, members: 115, youthLeader: "Samuel Wainaina", contact: "+254 700 123 026" },
-    { name: "Nyamira", clubs: 2, members: 92, youthLeader: "Eunice Moraa", contact: "+254 700 123 027" },
-    { name: "Kisii", clubs: 4, members: 158, youthLeader: "Dennis Ondieki", contact: "+254 700 123 028" },
-    { name: "Migori", clubs: 3, members: 135, youthLeader: "Winnie Awuor", contact: "+254 700 123 029" },
-    { name: "Homa Bay", clubs: 3, members: 142, youthLeader: "Brian Ochieng", contact: "+254 700 123 030" },
-    { name: "Siaya", clubs: 3, members: 118, youthLeader: "Millicent Auma", contact: "+254 700 123 031" },
-    { name: "Busia", clubs: 2, members: 98, youthLeader: "Felix Wanyama", contact: "+254 700 123 032" },
-    { name: "Kakamega", clubs: 4, members: 168, youthLeader: "Lydia Shiundu", contact: "+254 700 123 033" },
-    { name: "Vihiga", clubs: 2, members: 78, youthLeader: "Emmanuel Mudanya", contact: "+254 700 123 034" },
-    { name: "Bungoma", clubs: 3, members: 148, youthLeader: "Nancy Wekesa", contact: "+254 700 123 035" },
-    { name: "Bomet", clubs: 2, members: 105, youthLeader: "Hillary Kiprop", contact: "+254 700 123 036" },
-    { name: "Kericho", clubs: 3, members: 138, youthLeader: "Gladys Jebet", contact: "+254 700 123 037" },
-    { name: "Narok", clubs: 3, members: 152, youthLeader: "William Sankale", contact: "+254 700 123 038" },
-    { name: "Kajiado", clubs: 4, members: 188, youthLeader: "Esther Ntaiya", contact: "+254 700 123 039" },
-    { name: "Kericho", clubs: 2, members: 95, youthLeader: "Moses Kirui", contact: "+254 700 123 040" },
-    { name: "Kwale", clubs: 2, members: 112, youthLeader: "Amina Said", contact: "+254 700 123 041" },
-    { name: "Kilifi", clubs: 3, members: 125, youthLeader: "Omar Rashid", contact: "+254 700 123 042" },
-    { name: "Tana River", clubs: 2, members: 68, youthLeader: "Halima Abdi", contact: "+254 700 123 043" },
-    { name: "Lamu", clubs: 1, members: 45, youthLeader: "Fatuma Omar", contact: "+254 700 123 044" },
-    { name: "Taita Taveta", clubs: 2, members: 82, youthLeader: "Grace Mwangeka", contact: "+254 700 123 045" },
-    { name: "Garissa", clubs: 2, members: 75, youthLeader: "Ahmed Hassan", contact: "+254 700 123 046" },
-    { name: "Wajir", clubs: 1, members: 52, youthLeader: "Sahra Abdi", contact: "+254 700 123 047" },
-    { name: "Mandera", clubs: 1, members: 48, youthLeader: "Mohamed Ali", contact: "+254 700 123 048" }
+    { name: "Nairobi", clubs: 12, members: 450, youthLeader: "LILIAN WAMBUI MWANGI" },
+    { name: "Mombasa", clubs: 8, members: 320, youthLeader: "DOROTHY WENDY" },
+    { name: "Nakuru", clubs: 5, members: 180, youthLeader: "JAMES NJERI" },
+    { name: "Uasin Gishu", clubs: 4, members: 160, youthLeader: "ODDAH CHEPKEMOI" },
+    { name: "Kiambu", clubs: 7, members: 280, youthLeader: "WAMBUI HANNAH" },
+    { name: "Turkana", clubs: 3, members: 95, youthLeader: "Lolem Reuben" },
+    { name: "West Pokot", clubs: 2, members: 65, youthLeader: "Diana Chepkorir Rotich" },
+    { name: "Samburu", clubs: 2, members: 58, youthLeader: "SILVANA LENTAAYA" },
+    { name: "Nandi", clubs: 3, members: 125, youthLeader: "VALENTINE MIBEI" },
+    { name: "Laikipia", clubs: 3, members: 140, youthLeader: "EPHRAM MWANGI KINYUA" },
+    { name: "Nyeri", clubs: 4, members: 195, youthLeader: "WANJIKU MURIITHI" },
+    { name: "Kirinyaga", clubs: 3, members: 155, youthLeader: "WILLIAMS MAINA" },
+    { name: "Murang'a", clubs: 4, members: 185, youthLeader: "MONICAH NDUTA KIMARI" },
+    { name: "Kiambu", clubs: 5, members: 220, youthLeader: "WAMBUI HANNAH" },
+    { name: "Meru", clubs: 4, members: 165, youthLeader: "kaimenyi Samuel" },
+    { name: "Tharaka Nithi", clubs: 2, members: 88, youthLeader: "BRIAN ADAMS" },
+    { name: "Embu", clubs: 3, members: 132, youthLeader: "MERCY MUTANA" },
+    { name: "Kitui", clubs: 3, members: 145, youthLeader: "ONESMUS MUVENGEI" },
+    { name: "Machakos", clubs: 4, members: 175, youthLeader: "EMMANUEL KITHUKA" },
+    { name: "Makueni", clubs: 3, members: 128, youthLeader: "David mutua kitila" },
+    { name: "Nyandarua", clubs: 3, members: 115, youthLeader: "ANNAH WAMBUI" },
+    { name: "Nyamira", clubs: 2, members: 92, youthLeader: "Elizabeth Kerubo Makana" },
+    { name: "Kisii", clubs: 4, members: 158, youthLeader: "FLAVIA NYARANGI" },
+    { name: "Migori", clubs: 3, members: 135, youthLeader: "Raila Opany" },
+    { name: "Siaya", clubs: 3, members: 118, youthLeader: "Fidel Ouma" },
+    { name: "Busia", clubs: 2, members: 98, youthLeader: "RODRICK WESONGA" },
+    { name: "Kakamega", clubs: 4, members: 168, youthLeader: "Dildra Akoth Sisuma" },
+    { name: "Bungoma", clubs: 3, members: 148, youthLeader: "DERRICK WAFULA" },
+    { name: "Bomet", clubs: 2, members: 105, youthLeader: "Faith Cherono" },
+    { name: "Kericho", clubs: 3, members: 138, youthLeader: "WYCLIFE KIMUTAI" },
+    { name: "Narok", clubs: 3, members: 152, youthLeader: "WILLIAM PERE" },
+    { name: "Kajiado", clubs: 4, members: 188, youthLeader: "ELIJAH J.TIPANGO" },
+    { name: "Kericho", clubs: 2, members: 95, youthLeader: "WYCLIFE KIMUTAI" },
+    { name: "Kwale", clubs: 2, members: 112, youthLeader: "NURU MOHAMMED" },
+    { name: "Kilifi", clubs: 3, members: 125, youthLeader: "Irene birya" },
+    { name: "Tana River", clubs: 2, members: 68, youthLeader: "Hiribae Ali" },
+    { name: "Lamu", clubs: 1, members: 45, youthLeader: "ARIKAM ATHMAN MOHAMED" },
+    { name: "Taita Taveta", clubs: 2, members: 82, youthLeader: "ANTONY MWAKINGALI" },
+    { name: "Garissa", clubs: 2, members: 75, youthLeader: "TARAQAZIZ ABDI" },
+    { name: "Wajir", clubs: 1, members: 52, youthLeader: "Hussein Mohamed Noor" }
   ];
   return (
     <div className="min-h-screen bg-gray-50">
@@ -59,7 +53,7 @@ function EngagementsPage() {
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
           <OptimizedImage 
-            src="https://images.unsplash.com/photo-1517804234-5885b7cb0b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
+            src={Hero}
             alt="Kenya community engagement"
             className="w-full h-full object-cover"
             widths={[640, 960, 1280, 1536, 1920]}
@@ -111,7 +105,7 @@ function EngagementsPage() {
             </div>
             <div className="relative">
               <OptimizedImage 
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&h=500&q=80"
+                src= {Official}
                 alt="Tourism ambassador community meeting"
                 className="w-full h-96 object-cover rounded-2xl shadow-xl"
                 widths={[480, 768, 1024, 1280]}
@@ -130,7 +124,7 @@ function EngagementsPage() {
             <h2 className="text-4xl font-bold text-forest-900 mb-4">
               COUNTIES WITH ACTIVE <span className="text-nature-600">CLUBS</span>
             </h2>
-            <p className="text-lg text-forest-700">Our growing network of Tourism Ambassador Clubs across all 47 counties of Kenya</p>
+            <p className="text-lg text-forest-700">Our growing network of Tourism Ambassador Clubs across Kenya with active coordinators</p>
             <div className="mt-4 text-sm text-forest-600">
               <p>Scroll horizontally to view all counties ↔ (use scrollbar below)</p>
             </div>
@@ -144,9 +138,8 @@ function EngagementsPage() {
                   <h3 className="text-xl font-bold text-forest-900">{county.name}</h3>
                 </div>
                 <div className="mb-4 pb-4 border-b border-gray-100">
-                  <h4 className="text-sm font-semibold text-forest-700 mb-2">Youth Leader</h4>
+                  <h4 className="text-sm font-semibold text-forest-700 mb-2">County Coordinator</h4>
                   <p className="text-forest-900 font-medium">{county.youthLeader}</p>
-                  <p className="text-nature-600 text-sm">{county.contact}</p>
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between">
@@ -159,7 +152,7 @@ function EngagementsPage() {
                   </div>
                 </div>
                 <button className="w-full mt-4 bg-brand-green/10 text-brand-green py-2 rounded-lg text-sm font-medium hover:bg-brand-green/20 transition-colors">
-                  CONTACT LEADER
+                  VIEW DETAILS
                 </button>
               </div>
             ))}

@@ -78,11 +78,11 @@ function Footer() {
                 </div>
                 <div className="flex items-center space-x-2">
                   <Phone className="h-4 w-4 text-nature-400" />
-                  <span className="text-white/70 text-sm">+254 (700) 123-456</span>
+                  <span className="text-white/70 text-sm">+254 712 197226</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Mail className="h-4 w-4 text-nature-400" />
-                  <span className="text-white/70 text-sm">info@tourismambassadors.ke</span>
+                  <span className="text-white/70 text-sm">tourismambassadors23@gmail.com</span>
                 </div>
               </div>
               

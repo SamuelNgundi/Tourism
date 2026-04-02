@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import Magical from '../images/Magical_Kenya.png';
 import Tourism from '../images/Tourism.jpg';
 import Kepaco from '../images/Kepaco.jpg';
@@ -32,6 +32,33 @@ function PartnersSection() {
   // Duplicate the partners array for seamless infinite scroll
   const duplicatedPartners = [...partners, ...partners];
 
+  const scrollContainerRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-nature-50 to-forest-50 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -47,7 +74,14 @@ function PartnersSection() {
 
         <div className="relative">
           {/* Auto-scrolling container */}
-          <div className="flex animate-scroll-left space-x-8 items-center">
+          <div 
+            ref={scrollContainerRef}
+            className="flex animate-scroll-left space-x-8 items-center hover:pause-scroll cursor-grab active:cursor-grabbing overflow-x-auto scrollbar-hide"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
+          >
             {duplicatedPartners.map((partner, index) => (
               <div 
                 key={`${partner.name}-${index}`}

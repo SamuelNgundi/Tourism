@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import logo from '../images/logo.jpg.jpeg';
+import Samuel from '../images/Samuel.jpg';
+import Andrew from '../images/Andrew.jpg';
+import Judy from '../images/judy.jpg';
+import Ken from '../images/ken.jpg';
+import Mary from '../images/mary.jpg';
+import Ambassadors from '../images/Ambassadors.jpg';
 import { Target, Eye, Users, Award, Mail, Phone, MapPin, Download } from 'lucide-react';
 import OptimizedImage from '../components/OptimizedImage';
 
@@ -8,22 +14,34 @@ function InfoPage() {
 
   const teamMembers = [
     {
-      name: "Dr. Sarah Kimani",
-      role: "Executive Director",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612d6c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
-      bio: "Tourism expert with 15+ years experience in destination marketing and cultural preservation."
+      name: "SAMUEL JANE",
+      role: "PRESIDENT",
+      image: Samuel,
+      bio: "Leading the Tourism Ambassadors with vision and dedication to promote Kenya's tourism sector."
     },
     {
-      name: "James Mwangi",
-      role: "Community Engagement Manager",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
-      bio: "Passionate advocate for youth involvement in tourism development and community empowerment."
+      name: "ANDREW KINJA",
+      role: "VICE PRESIDENT",
+      image: Andrew,
+      bio: "Supporting strategic initiatives and community engagement for sustainable tourism development."
     },
     {
-      name: "Grace Wanjiru",
-      role: "Cultural Programs Director",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80",
-      bio: "Expert in Kenyan cultural heritage and traditional practices with focus on authentic tourism experiences."
+      name: "KENNEDY SILE",
+      role: "COUNTRY DIRECTOR",
+      image: Ken,
+      bio: "Overseeing national tourism programs and coordinating county-level activities."
+    },
+    {
+      name: "MARY MUTULA",
+      role: "COMMUNICATIONS AND PARTNERSHIPS DIRECTOR",
+      image: Mary,
+      bio: "Managing communications strategies and building partnerships for tourism promotion."
+    },
+    {
+      name: "JUDY ORICHO",
+      role: "INTERNATIONAL AFFAIRS DIRECTOR",
+      image: Judy,
+      bio: "Handling international relations and promoting Kenya tourism globally."
     }
   ];
 
@@ -82,9 +100,9 @@ function InfoPage() {
           <div className="flex flex-wrap justify-center space-x-8">
             {[
               { key: 'about', label: 'About Us' },
-              { key: 'membership', label: 'Membership' },
+              // { key: 'membership', label: 'Membership' },
               { key: 'team', label: 'Our Team' },
-              { key: 'catalog', label: 'Catalog' },
+              // { key: 'catalog', label: 'Catalog' },
               { key: 'contact', label: 'Contact' }
             ].map((tab) => (
               <button
@@ -150,7 +168,7 @@ function InfoPage() {
               </div>
               <div>
                 <OptimizedImage
-                  src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&h=500&q=80"
+                  src="https://plus.unsplash.com/premium_photo-1674591172914-9c36cee98849?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Kenya safari wildlife"
                   className="w-full h-96 object-cover rounded-2xl shadow-xl"
                   widths={[480, 768, 1024, 1280]}
@@ -163,7 +181,7 @@ function InfoPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="order-2 lg:order-1">
                 <OptimizedImage 
-                  src="https://images.unsplash.com/photo-1751358016973-88b94f5ca474?q=80&w=1033&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src={Ambassadors}
                   alt="Kenyan cultural celebration"
                   className="w-full h-96 object-cover rounded-2xl shadow-xl"
                   widths={[480, 768, 1024, 1280]}
@@ -316,7 +334,7 @@ function InfoPage() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold text-forest-900 mb-4">
-                MEET OUR <span className="text-nature-600">TEAM</span>
+                THE SECRETARIAT <span className="text-nature-600">TOURISM AMBASSADORS</span>
               </h2>
               <p className="text-lg text-forest-700">The passionate leaders driving the #TembeaKenya movement</p>
             </div>
@@ -407,15 +425,15 @@ function InfoPage() {
                     <div className="flex items-center space-x-4">
                       <Phone className="h-6 w-6 text-nature-500" />
                       <div>
-                        <p className="font-medium text-forest-900">Phone Numbers</p>
-                        <p className="text-forest-700">+254 (700) 123-456<br />+254 (701) 789-012</p>
+                        <p className="font-medium text-forest-900">Phone Number</p>
+                        <p className="text-forest-700">+254 712 197226</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
                       <Mail className="h-6 w-6 text-nature-500" />
                       <div>
-                        <p className="font-medium text-forest-900">Email Addresses</p>
-                        <p className="text-forest-700">info@tourismambassadors.ke<br />membership@tourismambassadors.ke</p>
+                        <p className="font-medium text-forest-900">Email Address</p>
+                        <p className="text-forest-700">tourismambassadors23@gmail.com</p>
                       </div>
                     </div>
                   </div>

@@ -26,9 +26,9 @@ function Header() {
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">HOME</Link>
             <Link to="/tours" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">TOURS</Link>
-            <Link to="/engagements" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">ENGAGEMENTS</Link>
+            <Link to="/info" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">ABOUT</Link>
             <Link to="/events" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">EVENTS</Link>
-            <Link to="/info" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">INFO</Link>
+            <Link to="/engagements" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">ENGAGEMENTS</Link>
             {/* <Link to="/competition" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">COMPETITION</Link> */}
             <Link to="/blog" className="text-sm font-medium text-white hover:text-white/80 transition-colors hover:underline underline-offset-8 decoration-2 decoration-brand-red/70">BLOG</Link>
           </div>
