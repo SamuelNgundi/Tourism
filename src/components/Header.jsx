@@ -46,9 +46,9 @@ function Header() {
             <div className="flex flex-col space-y-2">
               <Link to="/" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">HOME</Link>
               <Link to="/tours" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">TOURS</Link>
-              <Link to="/engagements" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">ENGAGEMENTS</Link>
+              <Link to="/info" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">ABOUT</Link>
               <Link to="/events" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">EVENTS</Link>
-              <Link to="/info" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">INFO</Link>
+              <Link to="/engagements" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">ENGAGEMENTS</Link>
               <Link to="/blog" className="text-sm font-medium text-white hover:text-white/80 transition-colors py-2 hover:underline underline-offset-6 decoration-2 decoration-brand-red/70">BLOG</Link>
             </div>
           </div>
