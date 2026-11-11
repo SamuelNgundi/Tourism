@@ -55,7 +55,7 @@ async function initializeDatabase() {
     await targetClient.query(schema);
     
     console.log('✅ Database initialized successfully!');
-    console.log('📊 Tables created: users, posts, tags, post_tags, media');
+    console.log('📊 Tables ready: users, posts, tags, post_tags, media, comments, inquiries, newsletter_subscribers, events');
     console.log('👤 Default admin user created (email: admin@tembeakenya.com, password: admin123)');
     console.log('⚠️  IMPORTANT: Change the default admin password immediately!');
     

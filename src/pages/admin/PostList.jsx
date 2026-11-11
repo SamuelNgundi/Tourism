@@ -39,7 +39,8 @@ function PostList() {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_URL}/posts`, {
+      const response = await axios.get(`${API_URL}/posts/admin/all`, {
+        headers: { Authorization: `Bearer ${token}` },
         params: {
           page: pagination.currentPage,
           limit: 10,

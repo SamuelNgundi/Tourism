@@ -1,80 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const authService = require('../services/authService');
-const { authMiddleware } = require('../middleware/auth');
+const { authMiddleware, authorizeRole } = require('../middleware/auth');
+const { useLimiter } = require('../middleware/rateLimit');
+const { asyncHandler } = require('../utils/errors');
 
-/**
- * Authentication Routes
- */
-
-// POST /api/auth/login - User login
-router.post('/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        error: 'Email and password are required'
-      });
-    }
-
-    const result = await authService.login(email, password);
-    
-    res.json(result);
-  } catch (error) {
-    console.error('Login error:', error);
-    res.status(401).json({
-      success: false,
-      error: error.message || 'Authentication failed'
-    });
-  }
-});
+// POST /api/auth/login - User login (rate limited)
+router.post('/login', useLimiter('login'), asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  res.json(await authService.login(email, password));
+}));
 
 // POST /api/auth/register - Register new user (admin only)
-router.post('/register', authMiddleware, async (req, res) => {
-  try {
-    // Only admins can register new users
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({
-        success: false,
-        error: 'Forbidden. Only admins can register users'
-      });
-    }
-
-    const { email, password, role } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        error: 'Email and password are required'
-      });
-    }
-
-    const result = await authService.register(email, password, role || 'author');
-    
-    res.status(201).json(result);
-  } catch (error) {
-    console.error('Registration error:', error);
-    res.status(400).json({
-      success: false,
-      error: error.message || 'Registration failed'
-    });
-  }
-});
+router.post('/register', authMiddleware, authorizeRole('admin'), asyncHandler(async (req, res) => {
+  const { email, password, role } = req.body;
+  res.status(201).json(await authService.register(email, password, role || 'author'));
+}));
 
 // GET /api/auth/profile - Get current user profile
-router.get('/profile', authMiddleware, async (req, res) => {
-  try {
-    const result = await authService.getProfile(req.user.id);
-    res.json(result);
-  } catch (error) {
-    console.error('Profile error:', error);
-    res.status(404).json({
-      success: false,
-      error: error.message || 'Failed to get profile'
-    });
-  }
-});
+router.get('/profile', authMiddleware, asyncHandler(async (req, res) => {
+  res.json(await authService.getProfile(req.user.id));
+}));
+
+// PUT /api/auth/password - Change own password
+router.put('/password', authMiddleware, asyncHandler(async (req, res) => {
+  const { current_password, new_password } = req.body;
+  res.json(await authService.changePassword(req.user.id, current_password, new_password));
+}));
 
 module.exports = router;

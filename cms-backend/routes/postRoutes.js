@@ -1,147 +1,77 @@
 const express = require('express');
 const router = express.Router();
 const postService = require('../services/postService');
+const commentService = require('../services/commentService');
+const { listTags } = require('./tagRoutes');
 const { authMiddleware, authorizeRole } = require('../middleware/auth');
+const { useLimiter } = require('../middleware/rateLimit');
+const { asyncHandler } = require('../utils/errors');
+const { parsePagination, parseId, optionalQueryString } = require('../utils/validation');
+
+const listFilters = (query) => ({
+  search: optionalQueryString(query.search),
+  tag: optionalQueryString(query.tag)
+});
 
 /**
  * Public Routes - No authentication required
  */
 
-// GET /api/posts - Get all published posts with pagination
-router.get('/', async (req, res) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+// GET /api/posts?page=&limit=&search=&tag= - Published posts
+router.get('/', asyncHandler(async (req, res) => {
+  res.json(await postService.getPublishedPosts(listFilters(req.query), parsePagination(req.query)));
+}));
 
-    const result = await postService.getPublishedPosts(page, limit);
-    res.json(result);
-  } catch (error) {
-    console.error('Get posts error:', error);
-    res.status(500).json({
-      success: false,
-      error: error.message || 'Failed to fetch posts'
-    });
-  }
-});
-
-// GET /api/posts/admin/:id - Get single post by ID (admin only)
-// MUST be before /:slug to prevent "admin" from being treated as a slug
-router.get('/admin/:id', authMiddleware, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const result = await postService.getPostById(id);
-    res.json(result);
-  } catch (error) {
-    console.error('Get post by ID error:', error);
-    res.status(404).json({
-      success: false,
-      error: error.message || 'Post not found'
-    });
-  }
-});
-
-// GET /api/posts/:slug - Get single post by slug (public)
-router.get('/:slug', async (req, res) => {
-  try {
-    const { slug } = req.params;
-    const result = await postService.getPostBySlug(slug);
-    res.json(result);
-  } catch (error) {
-    console.error('Get post error:', error);
-    res.status(404).json({
-      success: false,
-      error: error.message || 'Post not found'
-    });
-  }
-});
-
-// GET /api/posts/tags/all - Get all tags
-router.get('/tags/all', async (req, res) => {
-  try {
-    const result = await postService.getAllTags();
-    res.json(result);
-  } catch (error) {
-    console.error('Get tags error:', error);
-    res.status(500).json({
-      success: false,
-      error: error.message || 'Failed to fetch tags'
-    });
-  }
-});
+// GET /api/posts/tags/all - Get all tags (kept for the admin editor)
+router.get('/tags/all', listTags);
 
 /**
- * Protected Routes - Authentication required
+ * Protected Routes - declared before /:slug so "admin" is never treated as a slug
  */
 
-// GET /api/posts/admin/all - Get all posts (including drafts) - Admin/Author only
-router.get('/admin/all', authMiddleware, async (req, res) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const status = req.query.status || 'all';
+// GET /api/posts/admin/all?status=&search=&tag=&author_id= - All posts incl. drafts
+router.get('/admin/all', authMiddleware, asyncHandler(async (req, res) => {
+  const filters = {
+    ...listFilters(req.query),
+    status: optionalQueryString(req.query.status),
+    authorId: req.query.author_id ? parseId(req.query.author_id, 'author_id') : undefined
+  };
+  res.json(await postService.getPostsForUser(req.user, filters, parsePagination(req.query)));
+}));
 
-    // For admin view, we'll get posts with different statuses
-    // This is a simplified version - you might want to enhance the query
-    const result = await postService.getPublishedPosts(page, limit);
-    
-    // In a real scenario, you'd modify the query to filter by status
-    res.json(result);
-  } catch (error) {
-    console.error('Get admin posts error:', error);
-    res.status(500).json({
-      success: false,
-      error: error.message || 'Failed to fetch posts'
-    });
-  }
-});
+// GET /api/posts/admin/:id - Get single post by ID for editing
+router.get('/admin/:id', authMiddleware, asyncHandler(async (req, res) => {
+  res.json(await postService.getPostForEditing(req.params.id, req.user));
+}));
 
-// POST /api/posts - Create new post - Admin/Author only
-router.post('/', authMiddleware, async (req, res) => {
-  try {
-    const postData = req.body;
-    const result = await postService.createPost(postData, req.user.id);
-    
-    res.status(201).json(result);
-  } catch (error) {
-    console.error('Create post error:', error);
-    res.status(400).json({
-      success: false,
-      error: error.message || 'Failed to create post'
-    });
-  }
-});
+// GET /api/posts/:slug - Get a published post by slug (counts a view)
+router.get('/:slug', asyncHandler(async (req, res) => {
+  res.json(await postService.getPublishedPostBySlug(req.params.slug));
+}));
 
-// PUT /api/posts/:id - Update existing post - Admin/Author only
-router.put('/:id', authMiddleware, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updates = req.body;
-    
-    const result = await postService.updatePost(id, updates);
-    res.json(result);
-  } catch (error) {
-    console.error('Update post error:', error);
-    res.status(400).json({
-      success: false,
-      error: error.message || 'Failed to update post'
-    });
-  }
-});
+// GET /api/posts/:slug/comments - Approved comments for a post
+router.get('/:slug/comments', asyncHandler(async (req, res) => {
+  res.json(await commentService.listApprovedForPost(req.params.slug));
+}));
+
+// POST /api/posts/:slug/comments - Submit a comment (held for moderation)
+router.post('/:slug/comments', useLimiter('publicForms'), asyncHandler(async (req, res) => {
+  res.status(201).json(await commentService.submit(req.params.slug, req.body));
+}));
+
+// POST /api/posts - Create new post
+router.post('/', authMiddleware, asyncHandler(async (req, res) => {
+  res.status(201).json(await postService.createPost(req.body, req.user));
+}));
+
+// PUT /api/posts/:id - Update a post (authors: own posts only)
+router.put('/:id', authMiddleware, asyncHandler(async (req, res) => {
+  res.json(await postService.updatePost(req.params.id, req.body, req.user));
+}));
 
 // DELETE /api/posts/:id - Delete post - Admin only
-router.delete('/:id', authMiddleware, authorizeRole('admin'), async (req, res) => {
-  try {
-    const { id } = req.params;
-    const result = await postService.deletePost(id);
-    
-    res.json(result);
-  } catch (error) {
-    console.error('Delete post error:', error);
-    res.status(400).json({
-      success: false,
-      error: error.message || 'Failed to delete post'
-    });
-  }
-});
+router.delete('/:id', authMiddleware, authorizeRole('admin'), asyncHandler(async (req, res) => {
+  res.json(await postService.deletePost(req.params.id));
+}));
 
 module.exports = router;

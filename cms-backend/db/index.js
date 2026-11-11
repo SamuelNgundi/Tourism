@@ -15,12 +15,14 @@ const pool = new Pool({
 });
 
 // Test database connection
-pool.connect((err, client, release) => {
-  if (err) {
-    return console.error('Error acquiring client', err.stack);
-  }
-  console.log('✅ Connected to PostgreSQL database');
-  release();
-});
+if (process.env.NODE_ENV !== 'test') {
+  pool.connect((err, client, release) => {
+    if (err) {
+      return console.error('Error acquiring client', err.stack);
+    }
+    console.log('✅ Connected to PostgreSQL database');
+    release();
+  });
+}
 
 module.exports = pool;
