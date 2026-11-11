@@ -1,50 +1,87 @@
 const postQueries = require('../db/queries');
+const { HttpError } = require('../utils/errors');
+const { uniqueSlug } = require('../utils/slug');
+const {
+  requireString,
+  optionalString,
+  optionalUrl,
+  oneOf,
+  parseId,
+  slugify,
+  stripHtml,
+  buildPagination
+} = require('../utils/validation');
 
-/**
- * Utility function to generate URL-friendly slug from title
- * @param {string} title - Post title
- * @returns {string} - URL-friendly slug
- */
-const generateSlug = (title) => {
-  return title
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '') // Remove special characters
-    .replace(/[\s_-]+/g, '-') // Replace spaces and underscores with dashes
-    .replace(/^-+|-+$/g, ''); // Remove leading and trailing dashes
+const POST_STATUSES = ['draft', 'published', 'archived'];
+const MAX_BODY_LENGTH = 500000;
+
+const isAdmin = (user) => user && user.role === 'admin';
+
+const assertCanManage = (post, user) => {
+  if (!isAdmin(user) && post.author_id !== user.id) {
+    throw new HttpError(403, 'You can only manage your own posts');
+  }
+};
+
+const parseTagIds = async (tagIds) => {
+  if (tagIds === undefined || tagIds === null) return undefined;
+  if (!Array.isArray(tagIds)) {
+    throw new HttpError(400, 'tag_ids must be an array of tag IDs');
+  }
+  const ids = [...new Set(tagIds.map((id) => parseId(id, 'tag id')))];
+  if (ids.length > 0) {
+    const existing = await postQueries.findExistingTagIds(ids);
+    if (existing.length !== ids.length) {
+      throw new HttpError(400, 'One or more tags do not exist');
+    }
+  }
+  return ids;
 };
 
 /**
- * Validate post input data
- * @param {object} postData - Post data to validate
- * @returns {object} - Validation result
+ * Validates post fields. In partial mode only provided fields are checked.
+ * Returns only the columns that should be written.
  */
-const validatePostInput = (postData) => {
-  const errors = [];
-  
-  if (!postData.title || postData.title.trim().length === 0) {
-    errors.push('Title is required');
-  } else if (postData.title.length > 255) {
-    errors.push('Title must be less than 255 characters');
+const validatePostInput = (data, { partial = false } = {}) => {
+  const fields = {};
+
+  if (!partial || data.title !== undefined) {
+    fields.title = requireString(data.title, 'Title', { max: 255 });
+  }
+  if (!partial || data.body !== undefined) {
+    if (typeof data.body !== 'string' || data.body.trim().length === 0) {
+      throw new HttpError(400, 'Body content is required');
+    }
+    if (data.body.length > MAX_BODY_LENGTH) {
+      throw new HttpError(400, 'Body content is too long');
+    }
+    fields.body = data.body;
+  }
+  if (data.excerpt !== undefined) {
+    fields.excerpt = optionalString(data.excerpt, 'Excerpt', { max: 500 });
+  }
+  if (data.status !== undefined) {
+    fields.status = oneOf(data.status, POST_STATUSES, 'Status');
+  }
+  if (data.featured_image !== undefined) {
+    fields.featured_image = optionalUrl(data.featured_image, 'Featured image');
   }
 
-  if (!postData.body || postData.body.trim().length === 0) {
-    errors.push('Body content is required');
-  }
+  return fields;
+};
 
-  if (postData.excerpt && postData.excerpt.length > 500) {
-    errors.push('Excerpt must be less than 500 characters');
+/**
+ * Admins may assign a post to another user; for anyone else author_id is ignored.
+ */
+const resolveAuthorId = async (requestedAuthorId, user) => {
+  if (!isAdmin(user) || requestedAuthorId === undefined || requestedAuthorId === null || requestedAuthorId === '') {
+    return undefined;
   }
-
-  const validStatuses = ['draft', 'published', 'archived'];
-  if (postData.status && !validStatuses.includes(postData.status)) {
-    errors.push(`Status must be one of: ${validStatuses.join(', ')}`);
+  const authorId = parseId(requestedAuthorId, 'author_id');
+  if (!(await postQueries.userExists(authorId))) {
+    throw new HttpError(400, 'Author does not exist');
   }
-
-  return {
-    isValid: errors.length === 0,
-    errors
-  };
+  return authorId;
 };
 
 /**
@@ -52,217 +89,93 @@ const validatePostInput = (postData) => {
  * Handles business logic for blog posts
  */
 class PostService {
-  /**
-   * Get all published posts with pagination
-   * @param {number} page - Page number
-   * @param {number} limit - Items per page
-   * @returns {Promise<object>} - Paginated posts
-   */
-  async getPublishedPosts(page = 1, limit = 10) {
-    try {
-      const offset = (page - 1) * limit;
-      const posts = await postQueries.getAllPosts('published', limit, offset);
-      const totalCount = await postQueries.getTotalCount('published');
-      
-      return {
-        success: true,
-        data: {
-          posts,
-          pagination: {
-            currentPage: page,
-            totalPages: Math.ceil(totalCount / limit),
-            totalItems: totalCount,
-            itemsPerPage: limit
-          }
-        }
-      };
-    } catch (error) {
-      throw error;
-    }
+  async listPosts(filters, { page, limit, offset }) {
+    const [posts, totalItems] = await Promise.all([
+      postQueries.listPosts(filters, limit, offset),
+      postQueries.countPosts(filters)
+    ]);
+    return {
+      success: true,
+      data: { posts, pagination: buildPagination(page, limit, totalItems) }
+    };
   }
 
-  /**
-   * Get single post by slug
-   * @param {string} slug - Post slug
-   * @returns {Promise<object>} - Post data
-   */
-  async getPostBySlug(slug) {
-    try {
-      const post = await postQueries.getPostBySlug(slug);
-      
-      if (!post) {
-        throw new Error('Post not found');
-      }
-
-      return {
-        success: true,
-        data: post
-      };
-    } catch (error) {
-      throw error;
-    }
+  // Public listing: published posts only, optional search and tag filter.
+  async getPublishedPosts({ search, tag }, pagination) {
+    return this.listPosts({ status: 'published', search, tag }, pagination);
   }
 
-  /**
-   * Get single post by ID (for admin)
-   * @param {number} id - Post ID
-   * @returns {Promise<object>} - Post data
-   */
-  async getPostById(id) {
-    try {
-      const post = await postQueries.getPostById(id);
-      
-      if (!post) {
-        throw new Error('Post not found');
-      }
-
-      return {
-        success: true,
-        data: post
-      };
-    } catch (error) {
-      throw error;
-    }
+  // Admin listing: admins see every post, authors only their own.
+  async getPostsForUser(user, { status, search, tag, authorId }, pagination) {
+    const filters = {
+      status: !status || status === 'all' ? undefined : oneOf(status, POST_STATUSES, 'Status'),
+      search,
+      tag,
+      authorId: isAdmin(user) ? authorId : user.id
+    };
+    return this.listPosts(filters, pagination);
   }
 
-  /**
-   * Create new post
-   * @param {object} postData - Post data
-   * @param {number} authorId - Author user ID
-   * @returns {Promise<object>} - Created post
-   */
-  async createPost(postData, authorId) {
-    try {
-      // Validate input
-      const validation = validatePostInput(postData);
-      if (!validation.isValid) {
-        throw new Error(validation.errors.join(', '));
-      }
-
-      // Generate slug from title
-      let slug = generateSlug(postData.title);
-      
-      // Check if slug already exists and make it unique
-      let existingPost = await postQueries.getPostBySlug(slug);
-      let counter = 1;
-      while (existingPost) {
-        slug = `${generateSlug(postData.title)}-${counter}`;
-        existingPost = await postQueries.getPostBySlug(slug);
-        counter++;
-      }
-
-      // Create post
-      const post = await postQueries.createPost(
-        postData.title,
-        slug,
-        postData.body,
-        postData.excerpt || postData.body.substring(0, 200) + '...',
-        postData.status || 'draft',
-        authorId,
-        postData.tag_ids || []
-      );
-
-      return {
-        success: true,
-        data: post,
-        message: 'Post created successfully'
-      };
-    } catch (error) {
-      throw error;
+  async getPublishedPostBySlug(slug) {
+    const post = await postQueries.getPostBySlug(slug);
+    if (!post || post.status !== 'published') {
+      throw new HttpError(404, 'Post not found');
     }
+    post.view_count = await postQueries.incrementViewCount(post.id);
+    return { success: true, data: post };
   }
 
-  /**
-   * Update existing post
-   * @param {number} id - Post ID
-   * @param {object} updates - Updates to apply
-   * @returns {Promise<object>} - Updated post
-   */
-  async updatePost(id, updates) {
-    try {
-      // Validate input if provided
-      if (updates.title || updates.body) {
-        const validation = validatePostInput({ ...updates });
-        if (!validation.isValid) {
-          throw new Error(validation.errors.join(', '));
-        }
-      }
-
-      // Generate new slug if title changed
-      if (updates.title) {
-        const newSlug = generateSlug(updates.title);
-        const existingPost = await postQueries.getPostBySlug(newSlug);
-        
-        if (existingPost && existingPost.id !== id) {
-          // Slug exists for different post, make unique
-          let counter = 1;
-          let uniqueSlug = newSlug;
-          while (await postQueries.getPostBySlug(uniqueSlug)) {
-            uniqueSlug = `${newSlug}-${counter}`;
-            counter++;
-          }
-          updates.slug = uniqueSlug;
-        } else {
-          updates.slug = newSlug;
-        }
-      }
-
-      // Update post
-      const updatedPost = await postQueries.updatePost(id, updates, updates.tag_ids);
-
-      return {
-        success: true,
-        data: updatedPost.rows[0],
-        message: 'Post updated successfully'
-      };
-    } catch (error) {
-      throw error;
-    }
+  async getPostForEditing(id, user) {
+    const post = await postQueries.getPostById(parseId(id));
+    if (!post) throw new HttpError(404, 'Post not found');
+    assertCanManage(post, user);
+    return { success: true, data: post };
   }
 
-  /**
-   * Delete post
-   * @param {number} id - Post ID
-   * @returns {Promise<object>} - Deleted post
-   */
+  async createPost(data, user) {
+    const fields = validatePostInput(data);
+    const tagIds = await parseTagIds(data.tag_ids);
+    const authorId = await resolveAuthorId(data.author_id, user);
+
+    const post = await postQueries.createPost({
+      title: fields.title,
+      slug: await uniqueSlug('posts', slugify(fields.title), { fallback: 'post' }),
+      body: fields.body,
+      excerpt: fields.excerpt || `${stripHtml(fields.body).substring(0, 200)}...`,
+      status: fields.status || 'draft',
+      author_id: authorId || user.id,
+      featured_image: fields.featured_image || null,
+      tag_ids: tagIds || []
+    });
+
+    return { success: true, data: post, message: 'Post created successfully' };
+  }
+
+  async updatePost(id, data, user) {
+    const postId = parseId(id);
+    const existing = await postQueries.getPostById(postId);
+    if (!existing) throw new HttpError(404, 'Post not found');
+    assertCanManage(existing, user);
+
+    const updates = validatePostInput(data, { partial: true });
+    const tagIds = await parseTagIds(data.tag_ids);
+    const authorId = await resolveAuthorId(data.author_id, user);
+    if (authorId !== undefined) updates.author_id = authorId;
+
+    if (updates.title !== undefined && updates.title !== existing.title) {
+      updates.slug = await uniqueSlug('posts', slugify(updates.title), { excludeId: postId, fallback: 'post' });
+    }
+
+    const post = await postQueries.updatePost(postId, updates, tagIds);
+    return { success: true, data: post, message: 'Post updated successfully' };
+  }
+
   async deletePost(id) {
-    try {
-      const deletedPost = await postQueries.deletePost(id);
-      
-      if (!deletedPost) {
-        throw new Error('Post not found');
-      }
-
-      return {
-        success: true,
-        data: deletedPost,
-        message: 'Post deleted successfully'
-      };
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  /**
-   * Get all tags
-   * @returns {Promise<object>} - All tags
-   */
-  async getAllTags() {
-    try {
-      const query = 'SELECT * FROM tags ORDER BY name';
-      const result = await pool.query(query);
-      
-      return {
-        success: true,
-        data: result.rows
-      };
-    } catch (error) {
-      throw error;
-    }
+    const deletedPost = await postQueries.deletePost(parseId(id));
+    if (!deletedPost) throw new HttpError(404, 'Post not found');
+    return { success: true, data: deletedPost, message: 'Post deleted successfully' };
   }
 }
 
-// Import pool for getAllTags
-const pool = require('../db');
-
 module.exports = new PostService();
+module.exports.POST_STATUSES = POST_STATUSES;

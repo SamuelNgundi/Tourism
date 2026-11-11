@@ -1,46 +1,42 @@
 const jwt = require('jsonwebtoken');
+const pool = require('../db');
+
+const unauthorized = (res, error) => res.status(401).json({ success: false, error });
 
 /**
  * JWT Authentication Middleware
- * Verifies JWT tokens in Authorization header
+ * Verifies the Bearer token and loads the current user from the database, so
+ * deleted users, role changes and password changes take effect immediately.
  */
 const authMiddleware = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return unauthorized(res, 'Access denied. No token provided.');
+  }
+
+  let decoded;
   try {
-    // Get token from Authorization header
-    const authHeader = req.headers.authorization;
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({
-        success: false,
-        error: 'Access denied. No token provided.'
-      });
+    decoded = jwt.verify(authHeader.split(' ')[1], process.env.JWT_SECRET);
+  } catch (error) {
+    return unauthorized(res, error.name === 'TokenExpiredError' ? 'Token expired.' : 'Invalid token.');
+  }
+
+  try {
+    const { rows } = await pool.query(
+      'SELECT id, email, role, token_version FROM users WHERE id = $1',
+      [decoded.id]
+    );
+    const user = rows[0];
+
+    if (!user || (decoded.tv || 0) !== user.token_version) {
+      return unauthorized(res, 'Invalid token.');
     }
 
-    const token = authHeader.split(' ')[1];
-    
-    // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
-    // Attach user info to request
-    req.user = {
-      id: decoded.id,
-      email: decoded.email,
-      role: decoded.role
-    };
-    
+    req.user = { id: user.id, email: user.email, role: user.role };
     next();
   } catch (error) {
-    if (error.name === 'TokenExpiredError') {
-      return res.status(401).json({
-        success: false,
-        error: 'Token expired.'
-      });
-    }
-    
-    return res.status(401).json({
-      success: false,
-      error: 'Invalid token.'
-    });
+    next(error);
   }
 };
 
@@ -51,10 +47,7 @@ const authMiddleware = async (req, res, next) => {
 const authorizeRole = (...allowedRoles) => {
   return (req, res, next) => {
     if (!req.user) {
-      return res.status(401).json({
-        success: false,
-        error: 'Unauthorized'
-      });
+      return unauthorized(res, 'Unauthorized');
     }
 
     if (!allowedRoles.includes(req.user.role)) {

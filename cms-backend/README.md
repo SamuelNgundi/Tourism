@@ -56,6 +56,8 @@ JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 FRONTEND_URL=http://localhost:5173
 ```
 
+`JWT_SECRET` is required; the server will not start without it. Optional: `UPLOADS_DIR`, `BASE_URL`, `TRUST_PROXY`, `LOGIN_RATE_LIMIT_MAX` (default 10), `PUBLIC_FORM_RATE_LIMIT_MAX` (default 20), `RATE_LIMIT_WINDOW_MS` (default 15 min).
+
 ### 3. Initialize Database
 
 ```bash
@@ -65,7 +67,7 @@ npm run db:init
 
 This will:
 - Create the `blog_cms` database
-- Create tables: users, posts, tags, post_tags, media
+- Create or upgrade tables: users, posts, tags, post_tags, media, comments, inquiries, newsletter_subscribers, events (safe to re-run on an existing database)
 - Insert default admin user (email: `admin@tembeakenya.com`, password: `admin123`)
 - Insert sample tags
 
@@ -79,32 +81,87 @@ Server will start on `http://localhost:3001`
 
 ## 🔌 API Endpoints
 
+List endpoints accept `?page=` and `?limit=` and return a `pagination` object. Errors are always `{ "success": false, "error": "..." }`.
+
 ### Authentication
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/api/auth/login` | User login | No |
-| POST | `/api/auth/register` | Register new user | Yes (Admin) |
-| GET | `/api/auth/profile` | Get current user profile | Yes |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/auth/login` | Login (rate limited) | No |
+| POST | `/api/auth/register` | Register a user | Admin |
+| GET | `/api/auth/profile` | Current user | Yes |
+| PUT | `/api/auth/password` | Change password (`current_password`, `new_password`); revokes old tokens and returns a new one | Yes |
 
 ### Posts
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| GET | `/api/posts` | Get published posts | No |
-| GET | `/api/posts/:slug` | Get single post by slug | No |
-| GET | `/api/posts/tags/all` | Get all tags | No |
-| GET | `/api/posts/admin/all` | Get all posts (including drafts) | Yes |
-| POST | `/api/posts` | Create new post | Yes |
-| PUT | `/api/posts/:id` | Update post | Yes |
-| DELETE | `/api/posts/:id` | Delete post | Yes (Admin) |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/posts?search=&tag=` | Published posts | No |
+| GET | `/api/posts/:slug` | Published post by slug (increments `view_count`) | No |
+| GET | `/api/posts/:slug/comments` | Approved comments | No |
+| POST | `/api/posts/:slug/comments` | Submit a comment (`author_name`, `author_email`, `body`), held for moderation | No |
+| GET | `/api/posts/admin/all?status=&search=&tag=&author_id=` | All posts incl. drafts (authors see only their own) | Yes |
+| GET | `/api/posts/admin/:id` | Post for editing | Yes (owner or admin) |
+| POST | `/api/posts` | Create post | Yes |
+| PUT | `/api/posts/:id` | Update post (partial; tags only replaced when `tag_ids` is sent) | Yes (owner or admin) |
+| DELETE | `/api/posts/:id` | Delete post | Admin |
+
+### Tags
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/tags` (or `/api/posts/tags/all`) | Tags with post counts | No |
+| POST / PUT / DELETE | `/api/tags`, `/api/tags/:id` | Create, rename, delete | Admin |
+
+### Comments (moderation)
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/comments?status=&post_id=` | List comments | Admin |
+| PATCH | `/api/comments/:id` | Set `status` (`pending`, `approved`, `rejected`) | Admin |
+| DELETE | `/api/comments/:id` | Delete comment | Admin |
+
+### Inquiries (contact, tour booking, club registration, ...)
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/inquiries` | Submit a form: `type` (`contact`, `tour_booking`, `club_registration`, `membership`, `competition`, `general`), `name`, `email`, `phone`, `subject`, `message`, `details` (object) | No (rate limited) |
+| GET | `/api/inquiries?status=&type=&search=` | Inbox | Admin |
+| GET / PATCH / DELETE | `/api/inquiries/:id` | View, update `status`/`admin_notes`, delete | Admin |
+
+### Newsletter
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/newsletter/subscribe` | Subscribe (`email`, `name`) | No (rate limited) |
+| POST | `/api/newsletter/unsubscribe` | Unsubscribe with `token` | No |
+| GET | `/api/newsletter/subscribers?status=` | Subscriber list | Admin |
+| DELETE | `/api/newsletter/subscribers/:id` | Remove subscriber | Admin |
+
+### Events
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/events?when=upcoming\|past\|all` | Published events | No |
+| GET | `/api/events/:slug` | Published event | No |
+| GET | `/api/events/admin/all?status=` | All events incl. drafts | Admin |
+| POST / PUT / DELETE | `/api/events`, `/api/events/:id` | Create, update (partial), delete | Admin |
 
 ### Media
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/api/media/upload` | Upload file | Yes |
-| GET | `/api/media` | Get all media files | Yes |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/media/upload` | Upload file (field `file`, max 5 MB) | Yes |
+| GET | `/api/media` | List media | Yes |
+| DELETE | `/api/media/:id` | Delete media | Uploader or admin |
+
+### Users
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/users`, `/api/users/:id` | List / view users | Admin |
+| PATCH | `/api/users/:id` | Change `role` (not your own) | Admin |
+| DELETE | `/api/users/:id` | Delete user (not yourself; their posts are kept) | Admin |
 
 ## 📝 Usage Examples
 
@@ -211,6 +268,14 @@ const response = await fetch('http://localhost:3001/api/media/upload', {
 5. **File Uploads**: Validate file types and sizes (already implemented)
 
 ## 🛠️ Development
+
+### Running Tests
+
+Tests use Jest + Supertest against a real PostgreSQL database named `blog_cms_test` (override with `TEST_DB_NAME`; the name must end in `_test`). It is created and migrated automatically using the `DB_*` credentials from `.env`, and wiped between tests.
+
+```bash
+npm test
+```
 
 ### Using Nodemon
 

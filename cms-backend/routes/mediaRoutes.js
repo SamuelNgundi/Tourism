@@ -3,211 +3,97 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { authMiddleware } = require('../middleware/auth');
+const config = require('../config');
 const pool = require('../db');
+const { authMiddleware } = require('../middleware/auth');
+const { asyncHandler, HttpError } = require('../utils/errors');
+const { parseId, parsePagination, buildPagination } = require('../utils/validation');
 
-/**
- * Multer Configuration
- * Handles file uploads with validation
- */
+const ALLOWED_MIMES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+];
 
-// Create uploads directory if it doesn't exist
-const uploadsDir = path.join(__dirname, '..', 'uploads');
-const imagesDir = path.join(uploadsDir, 'images');
-const documentsDir = path.join(uploadsDir, 'documents');
+const subdirFor = (mimetype) => (mimetype.startsWith('image/') ? 'images' : 'documents');
 
-[uploadsDir, imagesDir, documentsDir].forEach(dir => {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-});
+const publicUrl = (relativeUrl) =>
+  `${process.env.BASE_URL || `http://localhost:${process.env.PORT || 3001}`}${relativeUrl}`;
 
-// Storage configuration
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    // Determine destination based on file type
-    const isImage = file.mimetype.startsWith('image/');
-    const dest = isImage ? imagesDir : documentsDir;
-    cb(null, dest);
-  },
-  filename: (req, file, cb) => {
-    // Generate unique filename: timestamp-originalname
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname);
-    const name = path.basename(file.originalname, ext);
-    cb(null, `${name}-${uniqueSuffix}${ext}`);
-  }
-});
-
-// File filter - validate file types
-const fileFilter = (req, file, cb) => {
-  const allowedMimes = [
-    'image/jpeg',
-    'image/png',
-    'image/webp',
-    'image/gif',
-    'application/pdf',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-  ];
-
-  if (allowedMimes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(new Error(`Invalid file type: ${file.mimetype}. Allowed types: ${allowedMimes.join(', ')}`), false);
-  }
-};
-
-// Multer upload middleware
 const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB limit
-  },
-  fileFilter: fileFilter
-});
-
-/**
- * Upload Route
- * POST /api/media/upload - Upload a file
- */
-router.post('/upload', authMiddleware, upload.single('file'), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        error: 'No file uploaded'
-      });
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      const dest = path.join(config.uploadsDir, subdirFor(file.mimetype));
+      fs.mkdir(dest, { recursive: true }, (err) => cb(err, dest));
+    },
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      const ext = path.extname(file.originalname).toLowerCase();
+      const name = path.basename(file.originalname, path.extname(file.originalname))
+        .replace(/[^\w.-]+/g, '_')
+        .slice(0, 100);
+      cb(null, `${name}-${uniqueSuffix}${ext}`);
     }
-
-    // Determine file URL (in production, this would be S3/Cloudinary URL)
-    const relativePath = path.relative(uploadsDir, req.file.destination).replace(/\\/g, '/');
-    const fileUrl = `/uploads/${relativePath}/${req.file.filename}`;
-
-    // Save file info to database
-    const query = `
-      INSERT INTO media (filename, original_name, mimetype, size, url, uploaded_by)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING *
-    `;
-    
-    const result = await pool.query(query, [
-      req.file.filename,
-      req.file.originalname,
-      req.file.mimetype,
-      req.file.size,
-      fileUrl,
-      req.user.id
-    ]);
-
-    res.status(201).json({
-      success: true,
-      data: {
-        ...result.rows[0],
-        url: process.env.BASE_URL ? `${process.env.BASE_URL}${fileUrl}` : `http://localhost:${process.env.PORT || 3001}${fileUrl}`
-      },
-      message: 'File uploaded successfully'
-    });
-  } catch (error) {
-    console.error('Upload error:', error);
-    res.status(500).json({
-      success: false,
-      error: error.message || 'Failed to upload file'
-    });
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (ALLOWED_MIMES.includes(file.mimetype)) return cb(null, true);
+    cb(new HttpError(400, `Invalid file type: ${file.mimetype}. Allowed types: ${ALLOWED_MIMES.join(', ')}`));
   }
 });
 
-/**
- * Get all media files (Admin only)
- */
-router.get('/', authMiddleware, async (req, res) => {
-  try {
-    const query = `
-      SELECT * FROM media
-      ORDER BY created_at DESC
-      LIMIT 50
-    `;
-    
-    const result = await pool.query(query);
-    
-    res.json({
-      success: true,
-      data: result.rows
-    });
-  } catch (error) {
-    console.error('Get media error:', error);
-    res.status(500).json({
-      success: false,
-      error: error.message || 'Failed to fetch media'
-    });
-  }
-});
+// POST /api/media/upload - Upload a file
+router.post('/upload', authMiddleware, upload.single('file'), asyncHandler(async (req, res) => {
+  if (!req.file) throw new HttpError(400, 'No file uploaded');
 
-/**
- * DELETE /api/media/:id - Delete a media file (Admin only)
- */
-router.delete('/:id', authMiddleware, async (req, res) => {
-  try {
-    const { id } = req.params;
-    
-    // First, get the media file info
-    const selectQuery = 'SELECT * FROM media WHERE id = $1';
-    const selectResult = await pool.query(selectQuery, [id]);
-    
-    if (selectResult.rows.length === 0) {
-      return res.status(404).json({
-        success: false,
-        error: 'Media file not found'
-      });
-    }
-    
-    const mediaFile = selectResult.rows[0];
-    
-    // Delete from database
-    const deleteQuery = 'DELETE FROM media WHERE id = $1 RETURNING *';
-    const deleteResult = await pool.query(deleteQuery, [id]);
-    
-    // Try to delete the physical file
-    try {
-      const filePath = path.join(__dirname, '..', mediaFile.url.replace('/uploads/', 'uploads/'));
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-        console.log('Deleted file:', filePath);
-      }
-    } catch (fileError) {
-      console.warn('Could not delete physical file:', fileError.message);
-      // Continue anyway - database record is deleted
-    }
-    
-    res.json({
-      success: true,
-      data: deleteResult.rows[0],
-      message: 'Media file deleted successfully'
-    });
-  } catch (error) {
-    console.error('Delete media error:', error);
-    res.status(500).json({
-      success: false,
-      error: error.message || 'Failed to delete media file'
-    });
-  }
-});
+  const fileUrl = `/uploads/${subdirFor(req.file.mimetype)}/${req.file.filename}`;
+  const { rows } = await pool.query(
+    `INSERT INTO media (filename, original_name, mimetype, size, url, uploaded_by)
+     VALUES ($1, $2, $3, $4, $5, $6)
+     RETURNING *`,
+    [req.file.filename, req.file.originalname, req.file.mimetype, req.file.size, fileUrl, req.user.id]
+  );
 
-// Error handling middleware for multer
-router.use((error, req, res, next) => {
-  if (error instanceof multer.MulterError) {
-    if (error.code === 'LIMIT_FILE_SIZE') {
-      return res.status(400).json({
-        success: false,
-        error: 'File too large. Maximum size is 5MB'
-      });
-    }
-    return res.status(400).json({
-      success: false,
-      error: error.message
-    });
+  res.status(201).json({
+    success: true,
+    data: { ...rows[0], url: publicUrl(fileUrl) },
+    message: 'File uploaded successfully'
+  });
+}));
+
+// GET /api/media?page=&limit= - List media files
+router.get('/', authMiddleware, asyncHandler(async (req, res) => {
+  const { page, limit, offset } = parsePagination(req.query, { defaultLimit: 50, maxLimit: 100 });
+  const [list, count] = await Promise.all([
+    pool.query('SELECT * FROM media ORDER BY created_at DESC, id DESC LIMIT $1 OFFSET $2', [limit, offset]),
+    pool.query('SELECT COUNT(*)::int AS count FROM media')
+  ]);
+  res.json({ success: true, data: list.rows, pagination: buildPagination(page, limit, count.rows[0].count) });
+}));
+
+// DELETE /api/media/:id - Delete a media file (admins, or the user who uploaded it)
+router.delete('/:id', authMiddleware, asyncHandler(async (req, res) => {
+  const id = parseId(req.params.id);
+  const { rows } = await pool.query('SELECT * FROM media WHERE id = $1', [id]);
+  const mediaFile = rows[0];
+  if (!mediaFile) throw new HttpError(404, 'Media file not found');
+
+  if (req.user.role !== 'admin' && mediaFile.uploaded_by !== req.user.id) {
+    throw new HttpError(403, 'You can only delete files you uploaded');
   }
-  next(error);
-});
+
+  const deleted = await pool.query('DELETE FROM media WHERE id = $1 RETURNING *', [id]);
+
+  const filePath = path.join(config.uploadsDir, subdirFor(mediaFile.mimetype), path.basename(mediaFile.filename));
+  fs.promises.unlink(filePath).catch((error) => {
+    if (error.code !== 'ENOENT') console.warn('Could not delete physical file:', error.message);
+  });
+
+  res.json({ success: true, data: deleted.rows[0], message: 'Media file deleted successfully' });
+}));
 
 module.exports = router;
